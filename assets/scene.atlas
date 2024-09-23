@@ -1,0 +1,244 @@
+
+scene.png
+size: 2048, 1024
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+add_flare
+  rotate: false
+  xy: 2, 252
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+add_flare_a
+  rotate: false
+  xy: 1517, 766
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+cliff_left
+  rotate: false
+  xy: 1113, 510
+  size: 228, 512
+  orig: 228, 512
+  offset: 0, 0
+  index: -1
+cliff_right
+  rotate: false
+  xy: 1343, 513
+  size: 172, 509
+  orig: 172, 509
+  offset: 0, 0
+  index: -1
+flare
+  rotate: false
+  xy: 1775, 766
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+fog_pix
+  rotate: false
+  xy: 2033, 1021
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+glow
+  rotate: false
+  xy: 2, 510
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+moon_shape
+  rotate: false
+  xy: 260, 252
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+mount
+  rotate: false
+  xy: 229, 122
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+mount_pix
+  rotate: false
+  xy: 1343, 510
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+mount_pix2
+  rotate: false
+  xy: 2, 22
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+mountainfog
+  rotate: false
+  xy: 359, 122
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+p1_crash_ass
+  rotate: false
+  xy: 1517, 508
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+p1_crash_nose
+  rotate: false
+  xy: 1775, 508
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+p1_duck
+  rotate: false
+  xy: 518, 425
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+p1_jump
+  rotate: false
+  xy: 776, 425
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+p1_ride
+  rotate: false
+  xy: 518, 167
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 2, 25
+  size: 225, 225
+  orig: 225, 225
+  offset: 0, 0
+  index: -1
+stone
+  rotate: false
+  xy: 229, 24
+  size: 118, 96
+  orig: 118, 96
+  offset: 0, 0
+  index: 11
+stone
+  rotate: false
+  xy: 349, 33
+  size: 119, 87
+  orig: 119, 87
+  offset: 0, 0
+  index: 5
+stone
+  rotate: false
+  xy: 489, 90
+  size: 126, 75
+  orig: 126, 75
+  offset: 0, 0
+  index: 10
+stone
+  rotate: false
+  xy: 617, 80
+  size: 118, 85
+  orig: 118, 85
+  offset: 0, 0
+  index: 8
+stone
+  rotate: false
+  xy: 737, 103
+  size: 125, 62
+  orig: 125, 62
+  offset: 0, 0
+  index: 3
+stone
+  rotate: false
+  xy: 864, 58
+  size: 94, 107
+  orig: 94, 107
+  offset: 0, 0
+  index: 7
+stone
+  rotate: false
+  xy: 960, 58
+  size: 92, 107
+  orig: 92, 107
+  offset: 0, 0
+  index: 2
+stone
+  rotate: false
+  xy: 470, 2
+  size: 90, 76
+  orig: 90, 76
+  offset: 0, 0
+  index: 4
+stone
+  rotate: false
+  xy: 737, 18
+  size: 89, 83
+  orig: 89, 83
+  offset: 0, 0
+  index: 0
+stone
+  rotate: false
+  xy: 1034, 420
+  size: 87, 88
+  orig: 87, 88
+  offset: 0, 0
+  index: 6
+stone
+  rotate: false
+  xy: 1034, 334
+  size: 87, 84
+  orig: 87, 84
+  offset: 0, 0
+  index: 9
+stone
+  rotate: false
+  xy: 1123, 427
+  size: 81, 81
+  orig: 81, 81
+  offset: 0, 0
+  index: 1
+sun_shape
+  rotate: false
+  xy: 776, 167
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+titlescreen
+  rotate: false
+  xy: 516, 683
+  size: 595, 339
+  orig: 595, 339
+  offset: 0, 0
+  index: -1
+tree_bg_pix
+  rotate: false
+  xy: 489, 249
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
+tree_fg_pix
+  rotate: false
+  xy: 349, 30
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

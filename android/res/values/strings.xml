@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Lato</string>
+    <string name="loading">loading …</string>
+    <string name="game_over">Game Over</string>
+    <string name="you_travelled">You travelled %1$d meters</string>
+    <string name="you_collected">You collected %1$d coins</string>
+    <string name="touch_to_restart">Touch the screen to restart</string>
+</resources>
