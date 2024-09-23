@@ -1,6 +1,7 @@
 package ardash.lato.terrain;
 
 import java.util.Arrays;
+import java.util.List;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
@@ -59,7 +60,7 @@ public class Village extends Section {
         }
 
         // add trees in foreground
-        for (int hx : Arrays.asList(14)) {
+        for (int hx : List.of(14)) {
             Spruce tree = new Spruce();
             final float heightAboveGround = MathUtils.random(-7f, -2f);
             final float randomZ = MathUtils.random(0.8f, 1.7f); // not too high, they cover too many stones

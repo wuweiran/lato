@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android'
 
 android {
   namespace "ardash.lato"
-  compileSdk 34
+  compileSdk 35
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
@@ -27,7 +27,7 @@ android {
   }
   defaultConfig {
     applicationId 'ardash.lato'
-    minSdkVersion 19
+    minSdkVersion 24
     targetSdkVersion 35
     versionCode 1
     versionName "1.0"

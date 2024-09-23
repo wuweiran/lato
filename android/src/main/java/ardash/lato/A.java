@@ -2,8 +2,14 @@
 
 package ardash.lato;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -28,6 +34,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.I18NBundle;
 import com.badlogic.gdx.utils.Logger;
 
 /**
@@ -38,22 +45,7 @@ import com.badlogic.gdx.utils.Logger;
  */
 public class A {
 
-    private static final String RUSSIAN_CHARACTERS = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-        + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-        + "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
-
-    private static final String UKRAINIAN_CHARACTERS = "АаБбВвГгҐґДдЕеЄєЖжЗзИиІіЇїЙйКкЛлМмНнОоПпРрСсТтУуФфХхЦцЧчШшЩщЬьЮюЯя"
-        + "ЙЦУКЕНГШЩЗХЇҐФІВАПРОЛДЖЄЯЧСМИТЬБЮ"
-        + "йцукенгшщзхїґфівапролджєячсмитьбю"
-        + "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
-
-    private static final String POLISH_CHARACTERS = "ABCDEFGHIJKLMNOPRSTUVWYZĄĆĘŁŃÓŚŹŻ"
-        + "abcdefghijklmnoprstuvwyząćęłńóśźż"
-        + "1234567890.,:;_¡!¿?\"'+-*/()[]={}";
-
-    private static final String EO_CHARACTERS = "ĉĝĥĵŝŭĈĜĤĴŜŬ";
-
-    private static final String EXTRA_CHARACTERS = RUSSIAN_CHARACTERS + POLISH_CHARACTERS + EO_CHARACTERS + UKRAINIAN_CHARACTERS;
+    private static final String RUSSIAN_CHARACTERS = "";
 
     public enum LabelStyleAsset {
         DISTANCE_LABEL, SMALL_TEXT;
@@ -76,13 +68,13 @@ public class A {
 
         // init
         static {
-            final float FONT_SIZE_LARGE_30 = getActualPixelHeight(30); // TODO set to gui height
-            final float FONT_SIZE_LARGE_15 = getActualPixelHeight(15); // TODO set to gui height
+            final float FONT_SIZE_LARGE_30 = getActualPixelHeight(28); // TODO set to gui height
+            final float FONT_SIZE_LARGE_15 = getActualPixelHeight(14); // TODO set to gui height
             {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
                 parameter = defaultParameter((int) Math.ceil(FONT_SIZE_LARGE_30), 0);
-                generator = A.getFontGenerator(FontGeneratorAsset.TLWGTYPISTBOLD);
+                generator = A.getFontGenerator(FontGeneratorAsset.UNIFONT);
                 generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_LARGE_30));
                 F1_30_BOLD.font = generator.generateFont(parameter);
                 F1_30_BOLD.font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
@@ -92,13 +84,18 @@ public class A {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
                 parameter = defaultParameter((int) Math.ceil(FONT_SIZE_LARGE_15), 0);
-                generator = A.getFontGenerator(FontGeneratorAsset.TLWGTYPIST);
+                generator = A.getFontGenerator(FontGeneratorAsset.UNIFONT);
                 generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_LARGE_15));
                 F1_15.font = generator.generateFont(parameter);
                 F1_15.font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 //				generator.dispose(); // do not dispose. it will cause an exception upon app exit
             }
 
+        }
+
+        private static int getActualPixelHeight(int pixelHeight) {
+            float screenDensity = Gdx.graphics.getDensity();
+            return (int) (pixelHeight * screenDensity);
         }
 
         /* extracted method to save some lines, returns some default params for fonts */
@@ -110,14 +107,36 @@ public class A {
             parameter.borderStraight = false;
             parameter.borderWidth = borderWidth;
             parameter.size = size;
+            I18NBundle i18NBundle = A.getI18nBundle();
+            Set<Character> allChars = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                allChars = i18NBundle.keys().stream()
+                    .map(i18NBundle::get)
+                    .map(String::chars)
+                    .flatMap(chars -> chars.mapToObj(c -> (char)c))
+                    .collect(Collectors.toSet());
+            } else {
+                allChars = i18NBundle.keys().stream()
+                    .map(i18NBundle::get)
+                    .map(String::toCharArray)
+                    .flatMap(array -> {
+                        List<Character> list = new ArrayList<>(array.length);
+                        for (char c : array) {
+                            list.add(c);
+                        }
+                        return list.stream();
+                    }).collect(Collectors.toSet());
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            for (Character character : allChars) {
+                stringBuilder.append(character);
+            }
+            parameter.characters = parameter.characters + stringBuilder;
             return parameter;
         }
 
 
-        private static int getActualPixelHeight(int pixelHeight) {
-            float screenDensity = Gdx.graphics.getDensity();
-            return (int) (pixelHeight * screenDensity);
-        }
+
 
 
         @Override
@@ -127,7 +146,7 @@ public class A {
     }
 
     private enum FontGeneratorAsset {
-        TLWGTYPIST, TLWGTYPISTBOLD;
+        UNIFONT;
 
         @Override
         public String toString() {
@@ -371,12 +390,12 @@ public class A {
 
         static {
             for (SoundGroupAsset e : SoundGroupAsset.values()) {
-                if (e.members.size() == 0) {
+                if (e.members.isEmpty()) {
                     // apply default format - get format from own name
                     final String format = e.name() + "_%d";
                     e.fillMembersByFormat(format, e.members);
                 }
-                if (e.members.size() == 0)
+                if (e.members.isEmpty())
                     throw new RuntimeException("Empty Asset Group created in " + e.toString());
             }
         }
@@ -495,8 +514,7 @@ public class A {
          *
          */
         SpriteGroupAsset() {
-            EnumSet<ARAsset> result = EnumSet.noneOf(ARAsset.class);
-            this.members = result;
+            this.members = EnumSet.noneOf(ARAsset.class);
         }
 
         public ARAsset getRandom() {
@@ -521,7 +539,7 @@ public class A {
         Texture.setAssetManager(manager);
     }
 
-    private static Logger log = new Logger("A", Application.LOG_NONE);
+    private static final Logger log = new Logger("A", Application.LOG_NONE);
 
     /**
      * this is the preparation of anync load, so it knows what is supposed to be loaded
@@ -704,6 +722,14 @@ public class A {
         return manager.get(path, FreeTypeFontGenerator.class);
     }
 
+    public static I18NBundle getI18nBundle() {
+        String i18nBundlePath = "i18n/Translation";
+        if (!manager.isLoaded(i18nBundlePath)) {
+            manager.load(i18nBundlePath, I18NBundle.class);
+            manager.finishLoading();
+        }
+        return manager.get(i18nBundlePath, I18NBundle.class);
+    }
 
 //	public static Skin getSkin() {
 //		if (!manager.isLoaded(SKIN.fileName)) {

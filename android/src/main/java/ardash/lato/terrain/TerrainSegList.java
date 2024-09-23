@@ -9,9 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import ardash.lato.terrain.TerrainSeg.TSType;
 
 public class TerrainSegList extends ArrayList<TerrainSeg> {
-    private static final long serialVersionUID = 607986145672323254L;
-
-    private RangeMap<Float, TerrainSeg> rm = new RangeMap<Float, TerrainSeg>();
+    private final RangeMap<Float, TerrainSeg> rm = new RangeMap<Float, TerrainSeg>();
 
     /**
      * for method: add(Vector2 to, Interpolation i)
@@ -50,8 +48,7 @@ public class TerrainSegList extends ArrayList<TerrainSeg> {
         float fromY = segement.fromPoint.y;
         float toY = segement.toPoint.y;
 
-        float ret = segement.transistion.apply(fromY, toY, (x - fromX) / range);
-        return ret;
+        return segement.transistion.apply(fromY, toY, (x - fromX) / range);
     }
 
 //	public Interpolation getTransistion(int index) {
@@ -78,11 +75,12 @@ public class TerrainSegList extends ArrayList<TerrainSeg> {
         return last().x;
     }
 
-    public void removeFirst() {
+    public TerrainSeg removeFirst() {
         final TerrainSeg removedItem = super.remove(0);
 //		removedItem.transistion
         // TODO free from object-Pool
         updateSearchIndex();
+        return removedItem;
     }
 
     @Override

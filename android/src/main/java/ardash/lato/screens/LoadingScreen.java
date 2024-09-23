@@ -28,7 +28,7 @@ public class LoadingScreen implements Screen {
 
         stage = new Stage(new ScreenViewport());
 
-        title = new Label("loading...", A.LabelStyleAsset.DISTANCE_LABEL.style);
+        title = new Label(A.getI18nBundle().get("loading"), A.LabelStyleAsset.DISTANCE_LABEL.style);
         title.setAlignment(Align.center);
         title.setY((float) (Gdx.graphics.getHeight() * 2) / 3);
         title.setWidth(Gdx.graphics.getWidth());
@@ -52,7 +52,7 @@ public class LoadingScreen implements Screen {
         Gdx.gl.glClearColor(p * EnvColors.DAY.fog.r, p * EnvColors.DAY.fog.g, p * EnvColors.DAY.fog.b, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        title.setText("loading: " + A.getPercentLoaded() + "%");
+        title.setText(A.getI18nBundle().format("loadingPercentage", A.getPercentLoaded()));
         stage.act();
         stage.draw();
 

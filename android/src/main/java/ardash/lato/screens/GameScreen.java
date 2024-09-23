@@ -1,8 +1,6 @@
 
 package ardash.lato.screens;
 
-import android.content.Context;
-
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -416,10 +414,10 @@ public class GameScreen implements Screen {
         lblDistance.setAlignment(Align.topRight);
 
         // coin label
-        Label lblCoins = new Label("Coins: 0", A.LabelStyleAsset.DISTANCE_LABEL.style) {
+        Label lblCoins = new Label(A.getI18nBundle().format("coins", 0), A.LabelStyleAsset.DISTANCE_LABEL.style) {
             public void act(float delta) {
                 super.act(delta);
-                setText("Coins: " + gm.getCoinsPickedUpThisRound());
+                setText(A.getI18nBundle().format("coins", gm.getCoinsPickedUpThisRound()));
             }
 
             ;
@@ -429,8 +427,8 @@ public class GameScreen implements Screen {
         //add labels
         mainTable.setFillParent(true);
         mainTable.row().expandX().fillX().expand().fill();
-        mainTable.add(lblCoins).left().pad(15f);
-        mainTable.add(lblDistance).right().pad(15f);
+        mainTable.add(lblCoins).left().pad(15f * Gdx.graphics.getDensity());
+        mainTable.add(lblDistance).right().pad(15f * Gdx.graphics.getDensity());
         mainTable.row().expandY();
 
 
