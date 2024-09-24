@@ -2,8 +2,6 @@
 
 package ardash.lato.actors;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
@@ -43,18 +41,6 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
 
     public enum Demise {
         NONE, LAND_ON_ASS, LAND_ON_NOSE, LAND_ON_STONE, HIT_STONE, DROP_IN_CANYON;
-
-        @Override
-        public String toString() {
-            return switch (this) {
-                case HIT_STONE -> "You hit a rock";
-                case LAND_ON_ASS -> "You landed on your ass";
-                case LAND_ON_NOSE -> "You landed on your nose";
-                case LAND_ON_STONE -> "You landed on a rock";
-                case DROP_IN_CANYON -> "You dropped into a canyon";
-                case NONE -> "";
-            };
-        }
     }
 
     private static final float ROTATION_SPEED = 180f; // TODO (deg/sec) this could be different for different performers or boards
@@ -559,7 +545,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
                 @SuppressWarnings("SuspiciousIndentation")
                 @Override
                 public void run() {
-                    new GameOverDialog(getCauseOfDeath().toString(), getTraveledDistanceMeters()).show(getGameScreen().guiStage);
+                    new GameOverDialog(getCauseOfDeath(), getTraveledDistanceMeters()).show(getGameScreen().guiStage);
 
                     //blur background behind dialog
                     Zoomer sb = new Zoomer((int) (Gdx.graphics.getWidth() * 0.25f), (int) (Gdx.graphics.getHeight() * 0.25f), Quality.VeryHigh);

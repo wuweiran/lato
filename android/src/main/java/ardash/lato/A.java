@@ -105,7 +105,7 @@ public class A {
             parameter.borderStraight = false;
             parameter.borderWidth = borderWidth;
             parameter.size = size;
-            I18NBundle i18NBundle = A.getI18nBundle();
+            I18NBundle i18NBundle = A.getI18NBundle();
             Set<Character> allChars = null;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 allChars = i18NBundle.keys().stream()
@@ -716,7 +716,7 @@ public class A {
         return manager.get(path, FreeTypeFontGenerator.class);
     }
 
-    public static I18NBundle getI18nBundle() {
+    public static I18NBundle getI18NBundle() {
         String i18nBundlePath = "i18n/Translation";
         if (!manager.isLoaded(i18nBundlePath)) {
             manager.load(i18nBundlePath, I18NBundle.class);

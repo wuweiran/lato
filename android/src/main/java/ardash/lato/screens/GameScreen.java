@@ -1,4 +1,3 @@
-
 package ardash.lato.screens;
 
 import com.badlogic.gdx.Application.ApplicationType;
@@ -161,7 +160,7 @@ public class GameScreen implements Screen {
         skyPlane.addListener(new SkyPlaneListener() {
             @Override
             public void onSunDirectionChanged(float newAngle) {
-                Vector2 d = new Vector2().set(1, 1).nor().setAngle(newAngle + 90f);
+                Vector2 d = new Vector2().set(1, 1).nor().setAngleDeg(newAngle + 90f);
                 Vector3 d3 = new Vector3().set(d.x, d.y, -0.2f).nor();
                 stage3d.setDirectionalLightDirection(d3.x, d3.y, d3.z);
             }
@@ -377,17 +376,47 @@ public class GameScreen implements Screen {
             addDebugInfoView();
 
         Table mainTable = new Table();
+
+        Label distanceLabel = new Label("0m", A.LabelStyleAsset.DISTANCE_LABEL.style) {
+            @Override
+            public void act(float delta) {
+                super.act(delta);
+                // we don't use a listener here, because the meters update all the time (each frame)
+                setText(performer.getTraveledDistanceMeters() + "m");
+            }
+        };
+        distanceLabel.setAlignment(Align.topRight);
+        distanceLabel.setVisible(false);
+
+        Label coinsLabel = new Label(A.getI18NBundle().format("coins", 0), A.LabelStyleAsset.DISTANCE_LABEL.style) {
+            @Override
+            public void act(float delta) {
+                super.act(delta);
+                setText(A.getI18NBundle().format("coins", gm.getCoinsPickedUpThisRound()));
+            }
+        };
+        coinsLabel.setAlignment(Align.topLeft);
+        coinsLabel.setVisible(false);
+
+        //add labels
+        mainTable.setFillParent(true);
+        mainTable.row().expandX().fillX().expand().fill();
+        mainTable.add(coinsLabel).left().pad(15f * Gdx.graphics.getDensity());
+        mainTable.add(distanceLabel).right().pad(15f * Gdx.graphics.getDensity());
+        mainTable.row().expandY();
+
         mainTable.setTouchable(Touchable.enabled);
         mainTable.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 performer.userInput(true);
-                System.out.println(performer.getState());
-                System.out.println(performer.getTimeInState());
                 // handle the final touch on the game over dialog
                 if (performer.getState().isCrashed() && performer.getTimeInState() >= 2f) {
                     gm.reset();
                     gm.game.setScreen(new LoadingScreen(gm));
+                } else if (performer.getState().isStarted()) {
+                    distanceLabel.setVisible(true);
+                    coinsLabel.setVisible(true);
                 }
                 return true;
             }
@@ -399,36 +428,6 @@ public class GameScreen implements Screen {
             }
         });
         guiStage.addActor(mainTable);
-
-        // distance label
-        Label lblDistance = new Label("0m", A.LabelStyleAsset.DISTANCE_LABEL.style) {
-            public void act(float delta) {
-                super.act(delta);
-                // we don't use a listener here, because the meters update all the time (each frame)
-                setText(performer.getTraveledDistanceMeters() + "m");
-            }
-
-            ;
-        };
-        lblDistance.setAlignment(Align.topRight);
-
-        // coin label
-        Label lblCoins = new Label(A.getI18nBundle().format("coins", 0), A.LabelStyleAsset.DISTANCE_LABEL.style) {
-            public void act(float delta) {
-                super.act(delta);
-                setText(A.getI18nBundle().format("coins", gm.getCoinsPickedUpThisRound()));
-            }
-
-            ;
-        };
-        lblCoins.setAlignment(Align.topLeft);
-
-        //add labels
-        mainTable.setFillParent(true);
-        mainTable.row().expandX().fillX().expand().fill();
-        mainTable.add(lblCoins).left().pad(15f * Gdx.graphics.getDensity());
-        mainTable.add(lblDistance).right().pad(15f * Gdx.graphics.getDensity());
-        mainTable.row().expandY();
 
 
     }
