@@ -3,13 +3,11 @@
 package ardash.lato;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -68,14 +66,14 @@ public class A {
 
         // init
         static {
-            final float FONT_SIZE_LARGE_30 = getActualPixelHeight(28); // TODO set to gui height
-            final float FONT_SIZE_LARGE_15 = getActualPixelHeight(14); // TODO set to gui height
+            final float FONT_SIZE_LARGE = getActualPixelHeight(28); // TODO set to gui height
+            final float FONT_SIZE_SMALL = getActualPixelHeight(14); // TODO set to gui height
             {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
-                parameter = defaultParameter((int) Math.ceil(FONT_SIZE_LARGE_30), 0);
+                parameter = defaultParameter((int) Math.ceil(FONT_SIZE_LARGE), 0);
                 generator = A.getFontGenerator(FontGeneratorAsset.UNIFONT);
-                generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_LARGE_30));
+                generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_LARGE));
                 F1_30_BOLD.font = generator.generateFont(parameter);
                 F1_30_BOLD.font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 //				generator.dispose(); // do not dispose. it will cause an exception upon app exit
@@ -83,9 +81,9 @@ public class A {
             {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
-                parameter = defaultParameter((int) Math.ceil(FONT_SIZE_LARGE_15), 0);
+                parameter = defaultParameter((int) Math.ceil(FONT_SIZE_SMALL), 0);
                 generator = A.getFontGenerator(FontGeneratorAsset.UNIFONT);
-                generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_LARGE_15));
+                generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_SMALL));
                 F1_15.font = generator.generateFont(parameter);
                 F1_15.font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 //				generator.dispose(); // do not dispose. it will cause an exception upon app exit
@@ -136,9 +134,6 @@ public class A {
         }
 
 
-
-
-
         @Override
         public String toString() {
             return "size" + super.toString().replaceAll("[^\\d.]", "") + ".ttf"; // "size72.ttf"
@@ -150,7 +145,7 @@ public class A {
 
         @Override
         public String toString() {
-            return "" + super.toString().toLowerCase(Locale.ENGLISH) + ".ttf"; // example "arial.ttf"
+            return super.toString().toLowerCase(Locale.ENGLISH) + ".ttf"; // example "arial.ttf"
         }
     }
 
@@ -165,7 +160,7 @@ public class A {
 
         @Override
         public String toString() {
-            return "" + super.toString().toLowerCase(Locale.ENGLISH) + ".p";
+            return super.toString().toLowerCase(Locale.ENGLISH) + ".p";
         }
     }
 
@@ -396,7 +391,7 @@ public class A {
                     e.fillMembersByFormat(format, e.members);
                 }
                 if (e.members.isEmpty())
-                    throw new RuntimeException("Empty Asset Group created in " + e.toString());
+                    throw new RuntimeException("Empty Asset Group created in " + e);
             }
         }
 
@@ -412,7 +407,7 @@ public class A {
             if (members == null)
                 throw new RuntimeException("members can't be null");
             this.members = members;
-            if (members.size() == 0)
+            if (members.isEmpty())
                 throw new RuntimeException("Empty Asset Group created");
         }
 
@@ -452,8 +447,7 @@ public class A {
          *
          */
         SoundGroupAsset() {
-            EnumSet<SoundAsset> result = EnumSet.noneOf(SoundAsset.class);
-            this.members = result;
+            this.members = EnumSet.noneOf(SoundAsset.class);
         }
 
         public SoundAsset getRandom() {
@@ -466,13 +460,13 @@ public class A {
 
         static {
             for (SpriteGroupAsset e : SpriteGroupAsset.values()) {
-                if (e.members.size() == 0) {
+                if (e.members.isEmpty()) {
                     // apply default format - get format from own name
                     final String format = e.name() + "_%d";
                     e.fillMembersByFormat(format, e.members);
                 }
-                if (e.members.size() == 0)
-                    throw new RuntimeException("Empty Asset Group created in " + e.toString());
+                if (e.members.isEmpty())
+                    throw new RuntimeException("Empty Asset Group created in " + e);
             }
         }
 

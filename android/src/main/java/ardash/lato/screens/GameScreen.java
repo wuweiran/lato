@@ -104,13 +104,14 @@ public class GameScreen implements Screen {
         profiler.enable();
     }
 
-    @Override
-    /**
+
+    /*
      * layers:
      * skyStage (skyPlane)
      * stage3D (MountainRange3)
-     * frontStage (ParticlePlane, Flareplane)
+     * frontStage (ParticlePlane, FlarePlane)
      */
+    @Override
     public void show() {
         final float lastKnownHourOfDay = gm.getLastHourOfDay();
         EnvColors lastKnownColorScheme = gm.getLastKnownColorScheme();
@@ -163,7 +164,6 @@ public class GameScreen implements Screen {
                 Vector2 d = new Vector2().set(1, 1).nor().setAngle(newAngle + 90f);
                 Vector3 d3 = new Vector3().set(d.x, d.y, -0.2f).nor();
                 stage3d.setDirectionalLightDirection(d3.x, d3.y, d3.z);
-//				System.out.println(d3);
             }
         });
 
@@ -313,8 +313,8 @@ public class GameScreen implements Screen {
             }
 
             // the valid zoom interval for the camera to be used to interpolate zooming with current speed
-            protected static final float MIN_ZOOM = 0f;
-            protected static final float MAX_ZOOM = 40f;
+            private static final float MIN_ZOOM = 0f;
+            private static final float MAX_ZOOM = 40f;
             Float initZ = null;
 
             @Override
@@ -324,8 +324,7 @@ public class GameScreen implements Screen {
                 if (initZ == null)
                     initZ = cam.getZ();
 
-                final float newz = initZ + newZoom;
-                lastz = newz;
+                lastz = initZ + newZoom;
                 // the camera will be moved by onPositionChange()
 //				cam.moveTo(lastx, lasty, newz, 0.1f);
 
