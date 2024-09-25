@@ -43,7 +43,7 @@ void main()
 	src1.rgb = adjustSaturation(src1.rgb,Src1Saturation);
 	src2.rgb = adjustSaturation(src2.rgb,Src2Saturation);
 
-	// darken the base image in areas where ther's a lot of bloom
+	// darken the base image in areas where there's a lot of bloom
 	// to prevent things looking excessively burned-out
 	//original *= (1.0 - clamp(bloom, 0.0, 1.0));
 	src1 *= (1.0 - src2);

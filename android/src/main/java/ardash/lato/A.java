@@ -43,8 +43,6 @@ import com.badlogic.gdx.utils.Logger;
  */
 public class A {
 
-    private static final String RUSSIAN_CHARACTERS = "";
-
     public enum LabelStyleAsset {
         DISTANCE_LABEL, SMALL_TEXT;
 
@@ -227,7 +225,7 @@ public class A {
 
         @Override
         public String toString() {
-            return "" + super.toString().toLowerCase(Locale.ENGLISH) + "";
+            return super.toString().toLowerCase(Locale.ENGLISH);
         }
     }
 

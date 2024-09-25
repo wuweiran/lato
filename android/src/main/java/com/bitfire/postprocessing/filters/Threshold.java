@@ -8,7 +8,7 @@ public final class Threshold extends Filter<Threshold> {
 
     public enum Param implements Parameter {
         // @formatter:off
-		Texture("u_texture0", 0), Threshold("treshold", 0), ThresholdInvTx("tresholdInvTx", 0);
+		Texture("u_texture0", 0), Threshold("threshold", 0), ThresholdInvTx("thresholdInvTx", 0);
 		// @formatter:on
 
         private String mnemonic;
@@ -37,7 +37,7 @@ public final class Threshold extends Filter<Threshold> {
 
     private float gamma = 0;
 
-    public void setTreshold(float gamma) {
+    public void setThreshold(float gamma) {
         this.gamma = gamma;
         setParams(Param.Threshold, gamma);
         setParams(Param.ThresholdInvTx, 1f / (1 - gamma)).endParams();
@@ -55,6 +55,6 @@ public final class Threshold extends Filter<Threshold> {
     @Override
     public void rebind() {
         setParams(Param.Texture, u_texture0);
-        setTreshold(this.gamma);
+        setThreshold(this.gamma);
     }
 }

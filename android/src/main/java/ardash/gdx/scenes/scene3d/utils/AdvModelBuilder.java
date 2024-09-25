@@ -34,17 +34,4 @@ public class AdvModelBuilder extends ModelBuilder {
 //			part("tria", GL20.GL_TRIANGLES, attributes, material).triangle(vertTmp1, vertTmp2, vertTmp3);
         return end();
     }
-
-    @SuppressWarnings("deprecation")
-    public Model createCirc(float radius, int divisions, Vector3 center,
-                            Color c3,
-                            final Material material,
-                            final long attributes) {
-        begin();
-        part("tria", GL20.GL_TRIANGLES, attributes, material).circle(radius, divisions, center, new Vector3(0, 0, 1));
-//			part("tria", GL20.GL_TRIANGLES, attributes, material).triangle(vertTmp1, vertTmp2, vertTmp3);
-//			get
-        return end();
-    }
-
 }

@@ -65,7 +65,7 @@ public abstract class Filter<T> {
 
     /*
      * Sets the parameter to the specified value for this filter. This is for one-off operations since the shader is being bound
-     * and unbound once per call: for a batch-ready version of this fuction see and use setParams instead.
+     * and unbound once per call: for a batch-ready version of this function see and use setParams instead.
      */
 
     // int

@@ -111,7 +111,7 @@ public final class LensFlare2 extends PostProcessorEffect {
         pingPongBuffer.dispose();
     }
 
-    public void setBaseIntesity(float intensity) {
+    public void setBaseIntensity(float intensity) {
         combine.setSource1Intensity(intensity);
     }
 
@@ -119,7 +119,7 @@ public final class LensFlare2 extends PostProcessorEffect {
         combine.setSource1Saturation(saturation);
     }
 
-    public void setFlareIntesity(float intensity) {
+    public void setFlareIntensity(float intensity) {
         combine.setSource2Intensity(intensity);
     }
 
@@ -164,9 +164,9 @@ public final class LensFlare2 extends PostProcessorEffect {
         setBias(settings.flareBias);
 
         // setup combine filter
-        setBaseIntesity(settings.baseIntensity);
+        setBaseIntensity(settings.baseIntensity);
         setBaseSaturation(settings.baseSaturation);
-        setFlareIntesity(settings.flareIntensity);
+        setFlareIntensity(settings.flareIntensity);
         setFlareSaturation(settings.flareSaturation);
 
         // setup blur filter
