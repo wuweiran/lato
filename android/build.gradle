@@ -1,7 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 
 android {
   namespace "ardash.lato"
@@ -9,9 +6,9 @@ android {
   sourceSets {
     main {
       manifest.srcFile 'AndroidManifest.xml'
-      java.setSrcDirs(['src/main/java', 'src/main/kotlin'])
-      aidl.setSrcDirs(['src/main/java', 'src/main/kotlin'])
-      renderscript.setSrcDirs(['src/main/java', 'src/main/kotlin'])
+      java.setSrcDirs(['src/main/java'])
+      aidl.setSrcDirs(['src/main/java'])
+      renderscript.setSrcDirs(['src/main/java'])
       res.setSrcDirs(['res'])
       assets.setSrcDirs(['../assets'])
       jniLibs.setSrcDirs(['libs'])
@@ -44,9 +41,6 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
-
-  kotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
-
 }
 
 repositories {
@@ -70,12 +64,10 @@ dependencies {
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
   natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
 
-  api "com.badlogicgames.ashley:ashley:$ashleyVersion"
   api "com.badlogicgames.box2dlights:box2dlights:$box2dlightsVersion"
   api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
   api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
-  api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
 
 // Called every time gradle gets executed, takes the native dependencies of
