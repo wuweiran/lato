@@ -7,7 +7,7 @@ import ardash.lato.A;
 import ardash.lato.A.MusicAsset;
 
 /**
- * Warpper for play sound and music. Obeys the Sound-on-off-setting
+ * Wrapper for play sound and music. Obeys the Sound-on-off-setting
  */
 public class SoundPlayer {
 

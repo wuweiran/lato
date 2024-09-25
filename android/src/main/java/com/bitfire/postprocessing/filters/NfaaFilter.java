@@ -18,10 +18,10 @@ public final class NfaaFilter extends Filter<NfaaFilter> {
 		Texture("u_texture0", 0), ViewportInverse("u_viewportInverse", 2);
 		// @formatter:on
 
-        private String mnemonic;
-        private int elementSize;
+        private final String mnemonic;
+        private final int elementSize;
 
-        private Param(String mnemonic, int arrayElementSize) {
+        Param(String mnemonic, int arrayElementSize) {
             this.mnemonic = mnemonic;
             this.elementSize = arrayElementSize;
         }

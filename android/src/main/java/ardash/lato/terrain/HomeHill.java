@@ -18,19 +18,12 @@ public class HomeHill extends Section {
         add(new Vector2(10, 3), new Vector2(25, 3), Interpolation.smooth);
         add(new Vector2(25, 3), new Vector2(40, 0), Interpolation.smooth);
 
-//        Toonhouse h1 = new Toonhouse(45f);
-//        h1.translate(10,3, -2);
-//		h1.setTag(Tag.BACK);
         Farmhouse h1 = Pools.obtain(Farmhouse.class);
         h1.init();
         h1.init(-170f);
         h1.translate(10, 3.1f, -4);
         h1.setTag(Tag.BACK);
 
-//        Toonhouse h2 = new Toonhouse(90f);
-//        h2.translate(25,3.1f, -2);
-//		h2.setTag(Tag.BACK);
-//		Farmhouse h2 = new Farmhouse(-70f);
         Farmhouse h2 = Pools.obtain(Farmhouse.class);
         h2.init();
         h2.init(-70f);

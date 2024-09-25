@@ -9,7 +9,7 @@ import com.bitfire.postprocessing.utils.PingPongBuffer;
  *
  * @author bmanuel
  */
-public final class Convolve2D extends MultipassFilter {
+public final class Convolve2D extends MultiPassFilter {
     public final int radius;
     public final int length; // NxN taps filter, w/ N=length
 

@@ -45,7 +45,7 @@ public class PoolableActor3D extends Actor3D implements Initable {
     }
 
     @Override
-    public boolean isInitialised() {
+    public boolean isInitialized() {
         return initialised;
     }
 

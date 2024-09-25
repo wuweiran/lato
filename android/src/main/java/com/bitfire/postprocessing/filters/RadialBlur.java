@@ -18,7 +18,7 @@ public final class RadialBlur extends Filter<RadialBlur> {
 
         final int length;
 
-        private Quality(int value) {
+        Quality(int value) {
             this.length = value;
         }
     }
