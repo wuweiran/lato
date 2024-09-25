@@ -509,7 +509,6 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
         System.out.println("land()");
         clearActions();
         final float rotation = getRotation();
-//		System.out.println(rotation);
 
         if (rotation >= 40f && rotation <= 190f) {
             crash(Pose.CRASH_ASS);
@@ -615,7 +614,11 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
     }
 
     public Vector2 getScarfAttachPointInStageCoords() {
-        scarfAttachPoint.set(0.5f, 0.f);
+        if (state == PlayerState.INAIR) {
+            scarfAttachPoint.set(0.1f, 0.3f);
+        } else {
+            scarfAttachPoint.set(0.15f, 0.9f);
+        }
 //		scarfAttachPointGroup.localToParentCoordinates(scarfAttachPoint);
         this.localToParentCoordinates(scarfAttachPoint);
 //		System.out.println(scarfAttachPoint);

@@ -307,7 +307,7 @@ public class GameScreen implements Screen {
 //				Vector2 v00 = new Vector2(0,0);
 //				performer.getScarfAttachPoint().localToScreenCoordinates(v00);
                 final Vector2 newScarfPosition = performer.getScarfAttachPointInStageCoords();
-                scarf.setPosition(performer.getX() + performer.getWidth() / 2f, performer.getY() + performer.getHeight() * 0.4f);
+                scarf.setPosition(newScarfPosition.x, newScarfPosition.y);
             }
 
             // the valid zoom interval for the camera to be used to interpolate zooming with current speed

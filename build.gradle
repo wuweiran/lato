@@ -53,8 +53,6 @@ configure(subprojects - project(':android')) {
   compileJava {
     options.incremental = true
   }
-  compileKotlin.compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
-
 }
 
 subprojects {
@@ -71,4 +69,4 @@ subprojects {
   }
 }
 
-eclipse.project.name = 'YourProjectName' + '-parent'
+eclipse.project.name = 'Lato' + '-parent'

@@ -652,29 +652,18 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
      */
     public Vector2 localToParentCoordinates(Vector2 localCoords) {
         final float rotation = -this.getRotation();
-        final float scaleX = 1;
-        final float scaleY = 1;
         final float x = this.x;
         final float y = this.y;
         if (rotation == 0) {
-            if (scaleX == 1 && scaleY == 1) {
-//				localCoords.x += x;
-//				localCoords.y += y;
-            } else {
-                final float originX = this.originX;
-                final float originY = this.originY;
-                localCoords.x = (localCoords.x - originX) * scaleX + originX + x;
-                localCoords.y = (localCoords.y - originY) * scaleY + originY + y;
-            }
+            localCoords.x = localCoords.x * scaleX - originX + x;
+            localCoords.y = localCoords.y * scaleY - originY + y;
         } else {
             final float cos = (float) Math.cos(rotation * MathUtils.degreesToRadians);
             final float sin = (float) Math.sin(rotation * MathUtils.degreesToRadians);
-            final float originX = 0;
-            final float originY = 0;
-            final float tox = (localCoords.x - originX) * scaleX;
-            final float toy = (localCoords.y - originY) * scaleY;
-            localCoords.x = (tox * cos + toy * sin) + originX + x;
-            localCoords.y = (tox * -sin + toy * cos) + originY + y;
+            final float tox = localCoords.x * scaleX;
+            final float toy = localCoords.y * scaleY;
+            localCoords.x = (tox * cos + toy * sin) - originX + x;
+            localCoords.y = (tox * -sin + toy * cos) - originY + y;
         }
         return localCoords;
     }
