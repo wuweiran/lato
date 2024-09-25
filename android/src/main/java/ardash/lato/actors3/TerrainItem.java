@@ -27,7 +27,7 @@ public interface TerrainItem extends Cullable {
     void translate(float x, float y, float z);
 
     @Override
-    public default boolean isCulled(Camera3D cam) {
+    default boolean isCulled(Camera3D cam) {
         final float px = Math.abs(Actor3D.getGameScreen().performer.getX());
         final float tx = Math.abs(this.getX());
         final float dx = Math.abs(px - tx);

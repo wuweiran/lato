@@ -18,10 +18,10 @@ import ardash.lato.terrain.CollidingTerrainItem;
 public class Coin extends PoolableActor3D implements CollidingTerrainItem {
     private boolean hasCollided;
     private Rectangle bb;
-    private static Color emissiveLightColour = Color.GOLD.cpy();
+    private static Color emissiveLightColor = Color.GOLD.cpy();
 
     static {
-        emissiveLightColour.lerp(Color.BLACK, 0.15f); // make less shiny by moving it 15% towards black
+        emissiveLightColor.lerp(Color.BLACK, 0.15f); // make less shiny by moving it 15% towards black
     }
 
     public Coin() {
@@ -31,7 +31,7 @@ public class Coin extends PoolableActor3D implements CollidingTerrainItem {
         translate(0, 0.7f, 0);
         setColor(Color.GOLD);
         materials.get(0).set(ColorAttribute.createSpecular(Color.WHITE));
-        materials.get(0).set(ColorAttribute.createEmissive(emissiveLightColour));
+        materials.get(0).set(ColorAttribute.createEmissive(emissiveLightColor));
         materials.get(0).set(FloatAttribute.createShininess(1.0f));
         setRoll(90f);
         setTag(Tag.CENTER);

@@ -18,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.PerformanceCounter;
@@ -85,7 +84,7 @@ public class GameScreen implements Screen {
     public enum LatoShaders {BACK, THREED}
 
     // Add this class member
-    private GLProfiler profiler;
+    private final GLProfiler profiler;
     private int CURRENT_SCREEN_WIDTH;
     private int CURRENT_SCREEN_SCREEN;
 
@@ -146,16 +145,16 @@ public class GameScreen implements Screen {
         flarePlane = new FlarePlane(MAX_WORLD_WIDTH * 2f, WORLD_HEIGHT);
         frontStage.addActor(flarePlane);
 //		flarePlane.init();
-        weather.addSunColourChangeListener(flarePlane);
+        weather.addSunColorChangeListener(flarePlane);
 
 
         final SkyPlane skyPlane = new SkyPlane(MAX_WORLD_WIDTH, WORLD_HEIGHT);
         backStage.addActor(skyPlane);
-        weather.addSkyColourChangeListener(skyPlane);
-        weather.addFogColourChangeListener(skyPlane);
-        weather.addSunColourChangeListener(skyPlane);
+        weather.addSkyColorChangeListener(skyPlane);
+        weather.addFogColorChangeListener(skyPlane);
+        weather.addSunColorChangeListener(skyPlane);
         weather.addSODChangeListener(skyPlane);
-        weather.addSunColourChangeListener(stage3d);
+        weather.addSunColorChangeListener(stage3d);
 //    	stage3d.setDirectionalLightColor(Color.YELLOW.cpy());
         skyPlane.addListener(new SkyPlaneListener() {
             @Override
@@ -173,11 +172,11 @@ public class GameScreen implements Screen {
             mr.setName("MountainRange" + i);
 
             // range offset
-            mr.translate(-MountainRange3.MOUNT_SIZE * (i + 1), -5f * i + 2, 0 + i * 10);
+            mr.translate(-MountainRange3.MOUNT_SIZE * (i + 1), -5f * i + 2, i * 10);
             mr.setSpeed((i * i + 1) * 0.2f + 1.001f * i);
 
             // move to center on 0,0
-            mr.translate(numMountains / 2 * -MountainRange3.MOUNT_SIZE, 0, 0);
+            mr.translate((float) (numMountains / 2) * -MountainRange3.MOUNT_SIZE, 0, 0);
 
         }
 
@@ -189,7 +188,7 @@ public class GameScreen implements Screen {
         waveDrawer = new WaveDrawer(EnvColors.DAY.ambient);
         performer.addListener(waveDrawer);
         stage3d.addActor(waveDrawer);
-        weather.addAmbientColourChangeListener(waveDrawer);
+        weather.addAmbientColorChangeListener(waveDrawer);
         gm.tm.addListener(waveDrawer);
 
 //		Spruce testTree = new Spruce();
@@ -209,7 +208,7 @@ public class GameScreen implements Screen {
 
 //		performer.enablePhysics();
 //		stage.setPerformer(performer); // attach the camera to him
-        weather.addAmbientColourChangeListener(performer);
+        weather.addAmbientColorChangeListener(performer);
 
 
         mountainStage3d.getCamera().update();
@@ -257,8 +256,8 @@ public class GameScreen implements Screen {
         mountainStage3d.getCamera().update();
 
         weather.addFogIntensityChangeListener(mountainStage3d);
-        weather.addFogColourChangeListener(mountainStage3d);
-        weather.addAmbientColourChangeListener(mountainStage3d);
+        weather.addFogColorChangeListener(mountainStage3d);
+        weather.addAmbientColorChangeListener(mountainStage3d);
 
         stage3d.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage3d.getCamera().lookAt(0, 0, 0);
@@ -268,7 +267,7 @@ public class GameScreen implements Screen {
         //((Camera3D)(backStage3d.getCamera())).fieldOfView =90f;
         stage3d.getCamera().update();
         gm.tm.addListener(stage3d);
-        weather.addAmbientColourChangeListener(stage3d);
+        weather.addAmbientColorChangeListener(stage3d);
 
         Vector2 tts = new Vector2(13.5f, 5.566f);
         Image3D titleText = new Image3D(tts.x, tts.y, A.getTextureRegion(ARAsset.TITLESCREEN), new ModelBuilder());
@@ -339,9 +338,6 @@ public class GameScreen implements Screen {
         // add the first piece of terrain
         gm.tm.createNewSection();
 
-
-        CURRENT_SCREEN_WIDTH = guiStage.getViewport().getScreenWidth(); // screenw :1680
-        CURRENT_SCREEN_SCREEN = guiStage.getViewport().getScreenHeight(); // screenh :
         buildGui();
 //		stage3d.act(); // act one time, to draw it correctly
 
@@ -433,9 +429,8 @@ public class GameScreen implements Screen {
     }
 
     private void addDebugInfoView() {
-        final LabelStyle lblStyle = A.LabelStyleAsset.DISTANCE_LABEL.style;
 //		lblStyle.font = new BitmapFont();
-        Label fps = new Label("fps", lblStyle) {
+        Label fps = new Label("fps", A.LabelStyleAsset.DISTANCE_LABEL.style) {
             @Override
             public void act(float delta) {
                 super.act(delta);
@@ -445,12 +440,11 @@ public class GameScreen implements Screen {
                 String lblText = "fps: " + Gdx.graphics.getFramesPerSecond();
                 lblText += "\nactors: " + stage3d.getRoot().getChildren().size;
 //				lblText += String.format("\nworld : B %s C %s PC %s", stage3d.world.getBodyCount(), stage3d.world.getContactCount(), performer.currentContacts);
-                lblText += String.format("\nposition: %.2f %.2f", performer.getX(), performer.getY());
-                lblText += String.format("\nspeed: %.2f %.2f%%", performer.getSpeed(), performer.getSpeedPercentage() * 100f);
+                lblText += "\nposition:" + performer.getX() + " "  + performer.getY();
+                lblText += "\nspeed:" + performer.getSpeed() + " " + performer.getSpeedPercentage() * 100f + "%";
                 lblText += "\nt-sections: " + countTSections + " t-segments: " + countTSegments;
                 lblText += String.format("\nculling : drawn %s of %s", Group3D.draw2Count, Group3D.draw1Count);
-                lblText += String.format("\ntime of day: %.2f %s %s fogginess: %.4f"
-                    , weather.currentTOD(), weather.getCurrentColorSchema(), weather.getCurrentPrecip(), weather.getCurrentFog());
+                lblText += "\ntime of day: " + weather.currentTOD() + " " + weather.getCurrentPrecip() + " " + weather.getCurrentColorSchema() + " fogginess: " + weather.getCurrentFog();
                 setText(lblText);
             }
         };

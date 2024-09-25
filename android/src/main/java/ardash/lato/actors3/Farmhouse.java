@@ -40,13 +40,7 @@ public class Farmhouse extends PoolableActor3D implements TerrainItem {
     }
 
     private static Model getModel() {
-        Model m = A.getModel(ModelAsset.FARMHOUSE);
-        return m;
-    }
-
-    @Override
-    public void reset() {
-        super.reset();
+        return A.getModel(ModelAsset.FARMHOUSE);
     }
 
     @Override

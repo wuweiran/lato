@@ -51,12 +51,12 @@ public class Stage3D extends InputAdapter implements Disposable,
     public Environment dirLightenvironment = new Environment();
 
     /**
-     * A color instance that hold the current fog colour. It will be changed and applied to the enviroment every frame.
+     * A color instance that hold the current fog color. It will be changed and applied to the enviroment every frame.
      */
     private Color fogColor = EnvColors.DAY.fog.cpy();
 
     /**
-     * A color instance that hold the current ambient colour. It will be changed and applied to the enviroment every frame.
+     * A color instance that hold the current ambient color. It will be changed and applied to the enviroment every frame.
      */
     private Color ambientColor = EnvColors.DAY.ambient.cpy();
 
@@ -126,13 +126,13 @@ public class Stage3D extends InputAdapter implements Disposable,
         directedLightSun.setDirection(v3.x, v3.y, v3.z);
         Vector2 v2 = Pools.get(Vector2.class).obtain();
         v2.set(x, y);
-        v2.rotate(180);
+        v2.rotateDeg(180);
         directedLightMoon.setDirection(v2.x, v2.y, z);
 
         // turn alpha down if at bottom of screen, and up if at top of screen, so moon and sun switch all the time smoothly
         // the way to turn off a directional light is to fade it to black
         // all colors must be scaled down anyway, because 2 light sources would overblend
-        final float angle = v2.angle();
+        final float angle = v2.angleDeg();
 //		System.out.println(angle);
         // sun movement: dawn -> 180 -> 90 -> 0 -> dusk (invisible otherwise)
         // sun movement: dawn -> 360 -> 270 -> 180 -> dusk (invisible otherwise)

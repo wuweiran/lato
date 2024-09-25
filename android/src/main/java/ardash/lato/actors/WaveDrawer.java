@@ -183,7 +183,7 @@ public class WaveDrawer extends Group3D implements Disposable, AmbientColorChang
     public float getAngleAtX(final float x) {
         tmpVector.set(x, getHeightAt(x));
         tmpVector.sub(x + 0.1f, getHeightAt(x + 0.1f));
-        float angle = tmpVector.scl(-1f).angle();
+        float angle = tmpVector.scl(-1f).angleDeg();
 //		angle = MathUtils.clamp(angle, -85f, 85f);
 //		System.out.println(angle);
         return angle;

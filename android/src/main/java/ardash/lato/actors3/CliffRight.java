@@ -18,7 +18,7 @@ public class CliffRight extends Image3D implements TerrainItem, Poolable {
         setScale(0.04f, 0.06f, 0.01f);
         setPosition(x, y, 0.01f);
         reset();
-        setColor(Color.WHITE); // The other env colours will draw it in the correct shading
+        setColor(Color.WHITE); // The other env colors will draw it in the correct shading
     }
 
     @Override

@@ -11,7 +11,7 @@ import ardash.gdx.scenes.scene3d.Actor3D;
  * @author Nathan Sweet
  */
 public class AfterAction extends DelegateAction {
-    private Array<Action3D> waitForActions = new Array<>(false, 4);
+    private final Array<Action3D> waitForActions = new Array<>(false, 4);
 
     @Override
     public void setActor(Actor3D actor) {

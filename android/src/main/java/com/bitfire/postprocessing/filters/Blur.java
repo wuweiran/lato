@@ -14,7 +14,7 @@ public final class Blur extends MultipassFilter {
 
 		public final int radius;
 
-		private Tap (int radius) {
+		Tap (int radius) {
 			this.radius = radius;
 		}
 	}
@@ -26,7 +26,7 @@ public final class Blur extends MultipassFilter {
 
 		public final Tap tap;
 
-		private BlurType (Tap tap) {
+		BlurType (Tap tap) {
 			this.tap = tap;
 		}
 	}

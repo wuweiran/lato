@@ -53,7 +53,7 @@ public class Downer extends Section {
 
     static private void makeNewRandomVector() {
         currentRandomVector.set(1, 0).setLength(MathUtils.random(MIN_LENGTH, MAX_LENGTH));
-        currentRandomVector.rotate(-MathUtils.random(MIN_ANGLE, MAX_ANGLE));
+        currentRandomVector.rotateDeg(-MathUtils.random(MIN_ANGLE, MAX_ANGLE));
         // all lengths from x to x must be int
         currentRandomVector.x = MathUtils.ceil(currentRandomVector.x);
     }

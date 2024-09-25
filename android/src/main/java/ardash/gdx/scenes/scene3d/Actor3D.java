@@ -72,7 +72,7 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
     float scaleX = 1, scaleY = 1, scaleZ = 1;
     float yaw = 0f, pitch = 0f, roll = 0f;
     Matrix4 rotationMatrix = new Matrix4();
-    private AnimationController animation;
+    private final AnimationController animation;
 
     protected float originX = 0, originY = 0;
 
@@ -294,7 +294,7 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
 
     /*
      *  Set the actor's rotation values to new yaw, pitch and roll
-     *  @param newYaw, newPitch, newRoll these values must be within 360 degrees
+     *  newYaw, newPitch, newRoll these values must be within 360 degrees
      */
     public void setRotation(float newYaw, float newPitch, float newRoll) {
         yaw = newYaw;
@@ -310,7 +310,7 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
     }
 
-    /*
+    /**
      *  Set the actor's yaw
      *  @param newYaw value must be within 360 degrees
      */
@@ -319,7 +319,7 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
     }
 
-    /*
+    /**
      *  Set the actor's pitch
      *  @param newPitch value must be within 360 degrees
      */
@@ -328,7 +328,7 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
     }
 
-    /*
+    /**
      *  Set the actor's roll
      *  @param newRoll value must be within 360 degrees
      */
@@ -347,7 +347,7 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
 
     /*
      *  Rotates the actor by the amount of yaw, pitch and roll
-     *  @param amountYaw,amountPitch,amountRoll These values must be within 360 degrees
+     *  amountYaw, amountPitch, amountRoll These values must be within 360 degrees
      */
     public void rotate(float amountYaw, float amountPitch, float amountRoll) {
         yaw = normalizeDegrees(yaw + amountYaw);

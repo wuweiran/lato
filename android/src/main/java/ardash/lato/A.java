@@ -106,25 +106,12 @@ public class A {
             parameter.borderWidth = borderWidth;
             parameter.size = size;
             I18NBundle i18NBundle = A.getI18NBundle();
-            Set<Character> allChars = null;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                allChars = i18NBundle.keys().stream()
-                    .map(i18NBundle::get)
-                    .map(String::chars)
-                    .flatMap(chars -> chars.mapToObj(c -> (char)c))
-                    .collect(Collectors.toSet());
-            } else {
-                allChars = i18NBundle.keys().stream()
-                    .map(i18NBundle::get)
-                    .map(String::toCharArray)
-                    .flatMap(array -> {
-                        List<Character> list = new ArrayList<>(array.length);
-                        for (char c : array) {
-                            list.add(c);
-                        }
-                        return list.stream();
-                    }).collect(Collectors.toSet());
-            }
+            Set<Character> allChars;
+            allChars = i18NBundle.keys().stream()
+                .map(i18NBundle::get)
+                .map(String::chars)
+                .flatMap(chars -> chars.mapToObj(c -> (char) c))
+                .collect(Collectors.toSet());
             StringBuilder stringBuilder = new StringBuilder();
             for (Character character : allChars) {
                 stringBuilder.append(character);

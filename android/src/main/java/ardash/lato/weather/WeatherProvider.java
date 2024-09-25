@@ -4,7 +4,7 @@ package ardash.lato.weather;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -35,40 +35,34 @@ public class WeatherProvider extends Actor {
     public static final float NIGHT_SECONDS = NIGHT_HOURS * SECONDS_PER_HOUR;
     public static final float DUSK_SECONDS = DUSK_HOURS * SECONDS_PER_HOUR;
     public static final float DAWN_SECONDS = DAWN_HOURS * SECONDS_PER_HOUR;
-    //	public static final float MIN_FOG = 0.0f;
-//	public static final float MAX_FOG = 1.0f;
-//	public static final float MAX_FOG_NO_PRECIPITATION = 0.425f;
     public static final float MIN_FOG = 0.0175f;
     public static final float MAX_FOG = 0.04f;
     public static final float MAX_FOG_NO_PRECIPITATION = (MAX_FOG + MIN_FOG) / 2f;
     public static final float FOG_STEPS = (MAX_FOG - MIN_FOG) / 20f; // for calibration with keyboard
-//	public static final float MIN_FOG = 0.6f;
-//	public static final float MAX_FOG = 0.99f;
-//	public static final float MAX_FOG_NO_PRECIPITATION = (MAX_FOG + MIN_FOG) /2f;
 
     /**
      * current Second Of Day. A value from 0 to 24 * SECONDS_PER_HOUR
      */
-    float currentSOD = SECONDS_PER_HOUR * 10.5f; // 10.5 = 10:30 am
-    EnvColors currentColorSchema = EnvColors.DAY;
+    float currentSOD; // 10.5 = 10:30 am
+    EnvColors currentColorSchema;
     float currentFog = MIN_FOG;
     Precipitation currentPrecip = Precipitation.CLEAR;
     FloatAction currentPrecipAction = null;
 
-    private LinkedList<AmbientColorChangeListener> ambientColourChangeListeners = new LinkedList<AmbientColorChangeListener>();
-    private LinkedList<FogColorChangeListener> fogColourChangeListeners = new LinkedList<FogColorChangeListener>();
-    private LinkedList<FogIntensityChangeListener> fogIntensityChangeListeners = new LinkedList<FogIntensityChangeListener>();
-    private LinkedList<PrecipitationChangeListener> precipitationChangeListeners = new LinkedList<PrecipitationChangeListener>();
-    private LinkedList<SkyColorChangeListener> skyColourChangeListeners = new LinkedList<SkyColorChangeListener>();
-    private LinkedList<SunColorChangeListener> sunColourChangeListeners = new LinkedList<SunColorChangeListener>();
-    private LinkedList<SODChangeListener> sodChangeListeners = new LinkedList<SODChangeListener>();
+    private final List<AmbientColorChangeListener> ambientColorChangeListeners = new ArrayList<>(4);
+    private final List<FogColorChangeListener> fogColorChangeListeners = new ArrayList<>(4);
+    private final List<FogIntensityChangeListener> fogIntensityChangeListeners = new ArrayList<>(4);
+    private final List<PrecipitationChangeListener> precipitationChangeListeners = new ArrayList<PrecipitationChangeListener>(4);
+    private final List<SkyColorChangeListener> skyColorChangeListeners = new ArrayList<>(4);
+    private final List<SunColorChangeListener> sunColorChangeListeners = new ArrayList<>(4);
+    private final List<SODChangeListener> sodChangeListeners = new ArrayList<>(4);
     private boolean isInitialised = false;
 
     /**
-     * @param initialTimeOfday example: 10.5 = 10:30 am
+     * @param initialTimeOfDay example: 10.5 = 10:30 am
      */
-    public WeatherProvider(float initialTimeOfday, EnvColors initialEnvColors) {
-        currentSOD = SECONDS_PER_HOUR * initialTimeOfday;
+    public WeatherProvider(float initialTimeOfDay, EnvColors initialEnvColors) {
+        currentSOD = SECONDS_PER_HOUR * initialTimeOfDay;
         currentColorSchema = initialEnvColors;
     }
 
@@ -80,16 +74,16 @@ public class WeatherProvider extends Actor {
         // send initial color, in case someone has been initialised wrongly
         sendInitialColorsIfNotDoneYet();
 
-        // change the colour scheme of the day at certain times
-        changeColoursWithAccordingToDaytime(true);
+        // change the color scheme of the day at certain times
+        changeColorsWithAccordingToDaytime();
 
         adjustPrecipitation();
 
-        if (currentSOD > (SECONDS_PER_HOUR * 10.5f) + 10f) {
+//        if (currentSOD > (SECONDS_PER_HOUR * 10.5f) + 10f) {
 //			triggerFogColorChange(EnvColors.DUSK.fog, 5f);
 //			triggerAmbientColorChange(EnvColors.DUSK.ambient, 5f);
 //			triggerSkyColorChange(EnvColors.DUSK.skyTop, EnvColors.DUSK.skyBottom, 5f);
-        }
+//        }
     }
 
     private void adjustPrecipitation() {
@@ -102,11 +96,6 @@ public class WeatherProvider extends Actor {
 
             // give CLEAR weather a higher chance to win :-)
             nextWeathers.add(Precipitation.CLEAR);
-//			nextWeathers.add(Precipitation.CLEAR);
-//			nextWeathers.add(Precipitation.CLEAR);
-//			nextWeathers.add(Precipitation.CLEAR);
-//			nextWeathers.add(Precipitation.CLEAR);
-//			nextWeathers.add(Precipitation.CLEAR);
             nextWeathers.add(Precipitation.CLEAR);
             nextWeathers.add(Precipitation.CLEAR);
 
@@ -140,7 +129,7 @@ public class WeatherProvider extends Actor {
 
             addAction(currentPrecipAction);
             currentPrecip = nextWeather;
-            System.out.println(String.format("next W %s duration: %+10.4f", nextWeather, d));
+            // System.out.println("next nextWeather" + nextWeather + " duration: " + d);
 
             // program the specific weather conditions
             switch (currentPrecip) {
@@ -149,7 +138,7 @@ public class WeatherProvider extends Actor {
                     sendFogIntensityChange(MathUtils.random(MIN_FOG, MAX_FOG_NO_PRECIPITATION), d * 0.2f);
                     break;
                 case RAIN:
-                    sendFogIntensityChange(MathUtils.random(MAX_FOG_NO_PRECIPITATION, MAX_FOG), d * 0.2f);
+                    sendFogIntensityChange(MathUtils.random(MAX_FOG_NO_PRECIPITATION, MAX_FOG), d * 0.25f);
                     break;
                 case SNOW:
                     sendFogIntensityChange(MathUtils.random(MAX_FOG_NO_PRECIPITATION, MAX_FOG), d * 0.2f);
@@ -172,10 +161,10 @@ public class WeatherProvider extends Actor {
     }
 
     /**
-     * This method sets the colours according to the time.
-     * But it only moves to the next colour schema if the time has come.
+     * This method sets the colors according to the time.
+     * But it only moves to the next color schema if the time has come.
      */
-    private void changeColoursWithAccordingToDaytime(final boolean doTrigger) {
+    private void changeColorsWithAccordingToDaytime() {
         switch (currentColorSchema) {
             case DAY:
                 if (currentTOD() > 15.2f) {
@@ -252,12 +241,12 @@ public class WeatherProvider extends Actor {
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
             final float newval = Math.min(currentFog + FOG_STEPS, MAX_FOG);
             sendFogIntensityChange(newval, 1f);
-            System.out.println(String.format("fog: %+10.4f", currentFog));
+            //System.out.println(String.format("fog: %+10.4f", currentFog));
         }
         if (Gdx.input.isKeyJustPressed(Keys.G)) {
             final float newval = Math.max(currentFog - FOG_STEPS, MIN_FOG);
             sendFogIntensityChange(newval, 1f);
-            System.out.println(String.format("fog: %+10.4f", currentFog));
+            //System.out.println(String.format("fog: %+10.4f", currentFog));
         }
     }
 
@@ -292,35 +281,35 @@ public class WeatherProvider extends Actor {
     }
 
     private void triggerAmbientColorChange(Color target, float duration) {
-        for (AmbientColorChangeListener colorChangeListener : ambientColourChangeListeners) {
+        for (AmbientColorChangeListener colorChangeListener : ambientColorChangeListeners) {
             colorChangeListener.onAmbientColorChangeTriggered(target, duration);
         }
     }
 
     private void triggerFogColorChange(Color target, float duration) {
-        for (FogColorChangeListener colorChangeListener : fogColourChangeListeners) {
+        for (FogColorChangeListener colorChangeListener : fogColorChangeListeners) {
             colorChangeListener.onFogColorChangeTriggered(target, duration);
         }
     }
 
     private void triggerSkyColorChange(Color targetTop, Color targetBottom, float duration) {
-        for (SkyColorChangeListener colorChangeListener : skyColourChangeListeners) {
+        for (SkyColorChangeListener colorChangeListener : skyColorChangeListeners) {
             colorChangeListener.onSkyColorChangeTriggered(targetTop, targetBottom, duration);
         }
     }
 
     private void triggerSunColorChange(Color target, float duration) {
-        for (SunColorChangeListener colorChangeListener : sunColourChangeListeners) {
+        for (SunColorChangeListener colorChangeListener : sunColorChangeListeners) {
             colorChangeListener.onSunColorChangeTriggered(target, duration);
         }
     }
 
-    public void addAmbientColourChangeListener(AmbientColorChangeListener ambientColourChangeListener) {
-        this.ambientColourChangeListeners.add(ambientColourChangeListener);
+    public void addAmbientColorChangeListener(AmbientColorChangeListener ambientColorChangeListener) {
+        this.ambientColorChangeListeners.add(ambientColorChangeListener);
     }
 
-    public void addFogColourChangeListener(FogColorChangeListener fogColourChangeListener) {
-        this.fogColourChangeListeners.add(fogColourChangeListener);
+    public void addFogColorChangeListener(FogColorChangeListener fogColorChangeListener) {
+        this.fogColorChangeListeners.add(fogColorChangeListener);
     }
 
     public void addFogIntensityChangeListener(FogIntensityChangeListener fogIntensityChangeListener) {
@@ -331,12 +320,12 @@ public class WeatherProvider extends Actor {
         this.precipitationChangeListeners.add(precipitationChangeListener);
     }
 
-    public void addSkyColourChangeListener(SkyColorChangeListener skyColourChangeListener) {
-        this.skyColourChangeListeners.add(skyColourChangeListener);
+    public void addSkyColorChangeListener(SkyColorChangeListener skyColorChangeListener) {
+        this.skyColorChangeListeners.add(skyColorChangeListener);
     }
 
-    public void addSunColourChangeListener(SunColorChangeListener sunColourChangeListener) {
-        this.sunColourChangeListeners.add(sunColourChangeListener);
+    public void addSunColorChangeListener(SunColorChangeListener sunColorChangeListener) {
+        this.sunColorChangeListeners.add(sunColorChangeListener);
     }
 
     public void addSODChangeListener(SODChangeListener sodChangeListener) {
