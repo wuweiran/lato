@@ -304,8 +304,6 @@ public class GameScreen implements Screen {
 //				cam.moveTo(performer.getX(), performer.getY(), lastz, 0.3f);
                 cam.update();
 
-//				Vector2 v00 = new Vector2(0,0);
-//				performer.getScarfAttachPoint().localToScreenCoordinates(v00);
                 final Vector2 newScarfPosition = performer.getScarfAttachPointInStageCoords();
                 scarf.setPosition(newScarfPosition.x, newScarfPosition.y);
             }

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -105,16 +106,31 @@ public class A {
             parameter.size = size;
             I18NBundle i18NBundle = A.getI18NBundle();
             Set<Character> allChars;
-            allChars = i18NBundle.keys().stream()
-                .map(i18NBundle::get)
-                .map(String::chars)
-                .flatMap(chars -> chars.mapToObj(c -> (char) c))
-                .collect(Collectors.toSet());
+            String DEFAULT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890\"!`?'.,;:()[]{}<>|/@\\^$€-%+=#_&~*";
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                allChars = Stream.concat(i18NBundle.keys().stream()
+                        .map(i18NBundle::get), Stream.of(DEFAULT_CHARS))
+                    .map(String::chars)
+                    .flatMap(chars -> chars.mapToObj(c -> (char) c))
+                    .collect(Collectors.toSet());
+            } else {
+                allChars = Stream.concat(i18NBundle.keys().stream()
+                        .map(i18NBundle::get), Stream.of(DEFAULT_CHARS))
+                    .map(String::toCharArray)
+                    .flatMap(array -> {
+                        List<Character> list = new ArrayList<>(array.length);
+                        for (char c : array) {
+                            list.add(c);
+                        }
+                        return list.stream();
+                    }).collect(Collectors.toSet());
+            }
             StringBuilder stringBuilder = new StringBuilder();
             for (Character character : allChars) {
                 stringBuilder.append(character);
             }
-            parameter.characters = parameter.characters + stringBuilder;
+            Gdx.app.log("debugggg", stringBuilder.toString());
+            parameter.characters = stringBuilder.toString();
             return parameter;
         }
 
@@ -429,7 +445,6 @@ public class A {
         /**
          * creates the members automatically using its own name as format,
          * happens in a static block after <init>
-         *
          */
         SoundGroupAsset() {
             this.members = EnumSet.noneOf(SoundAsset.class);

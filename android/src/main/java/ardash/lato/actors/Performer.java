@@ -179,7 +179,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
             }
         } else {
             // apply the speed into a direction of movement, which is the direction of the terrain, or straight forward (angle 0) when in air
-            velocity.set(1, 1).setLength(speed).setAngle(state.isInAir() ? 0f : rotation);
+            velocity.set(1, 1).setLength(speed).setAngleDeg(state.isInAir() ? 0f : rotation);
             final float deltaX = velocity.x;
             moveBy(deltaX * delta, 0); // movement is product of time-delta and speed-delta
 
@@ -249,7 +249,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
 //		final float rotation = getRotation() < 0f ? getRotation() + 360f : getRotation();
 //
 //		// apply the speed into a direction of movement, which is the direction of the terrain, or straight forward (angle 0) when in air
-//		velocity.set(1,1).setLength(speed).setAngle(state.isInAir() ? 0f : rotation);
+//		velocity.set(1,1).setLength(speed).setAngleDeg(state.isInAir() ? 0f : rotation);
 //		final float deltaX = velocity.x;
 //		moveBy(deltaX*delta, 0); // movement is product of time-delta and speed-delta
 //
@@ -615,9 +615,9 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
 
     public Vector2 getScarfAttachPointInStageCoords() {
         if (state == PlayerState.INAIR) {
-            scarfAttachPoint.set(0.1f, 0.3f);
+            scarfAttachPoint.set(0.1f, 0.49f);
         } else {
-            scarfAttachPoint.set(0.15f, 0.9f);
+            scarfAttachPoint.set(0.15f, 0.88f);
         }
 //		scarfAttachPointGroup.localToParentCoordinates(scarfAttachPoint);
         this.localToParentCoordinates(scarfAttachPoint);
