@@ -247,9 +247,7 @@ public class A {
 
 
 //	public enum SpriteAsset {
-//		STONE_0,STONE_1,STONE_2,STONE_3,STONE_4,STONE_5,STONE_6,STONE_7,STONE_8,STONE_9,STONE_10,STONE_11;
 //
-//	//
 ////		DORK_0,DORK_1,DORK_2,DORK_3,
 ////
 ////		PENG_0,
@@ -761,6 +759,4 @@ public class A {
     public static float getProgress() {
         return manager.getProgress();
     }
-
-
 }
