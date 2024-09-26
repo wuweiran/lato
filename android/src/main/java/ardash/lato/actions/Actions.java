@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 
 import ardash.gdx.scenes.scene3d.actions.Actions3D;
 import ardash.gdx.scenes.scene3d.actions.FloatAction;
+import ardash.gdx.scenes.scene3d.actions.NoAlphaColorAction;
 
 public class Actions extends Actions3D {
     static public GravityAction gravity() {

@@ -23,7 +23,6 @@ public class LatoGame extends Game {
     @Override
     public void setScreen(Screen screen) {
         super.setScreen(screen);
-        System.gc();
     }
 
     @Override

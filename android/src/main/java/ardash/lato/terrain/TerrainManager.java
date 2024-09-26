@@ -34,29 +34,12 @@ public class TerrainManager {
      * List of all sections of the current terrain. Will be truncated, when a new round starts.
      * Appends new items but does not delete first items in the beginning, so we an look back of what we have passed in the current round.
      */
-    List<Section> sections = new ArrayList<Section>();
+    List<Section> sections = new ArrayList<>();
 
-    List<TerrainListener> listeners = new ArrayList<TerrainListener>();
+    List<TerrainListener> listeners = new ArrayList<>();
 
     private TerrainItemDistributor cd = new CoinDistributor();
     private TerrainItemDistributor sd = new StoneDistributor();
-
-    public TerrainManager() {
-        reset();
-    }
-
-    // TODO dont reset, make a new one
-    private void reset() {
-        for (Section section : sections) {
-            for (TerrainItem ti : section.surroundingItems) {
-                Pools.free(ti);
-            }
-        }
-        sections.clear();
-        listeners.clear();
-        cd.reset();
-        sd.reset();
-    }
 
     public Section getLastSection() {
         if (sections.isEmpty())
@@ -65,8 +48,6 @@ public class TerrainManager {
     }
 
     public void createNewSection() {
-        System.out.println("NEW SEGMENT");
-        System.gc();
         Section s;
         if (sections.isEmpty()) {
             s = new HomeHill();

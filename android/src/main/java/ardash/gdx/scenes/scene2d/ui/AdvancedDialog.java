@@ -50,12 +50,11 @@ public class AdvancedDialog extends Dialog {
 //	}
 
     public Dialog text(String text, LabelStyle labelStyle, float wordWrapWidth) {
-        //final Dialog ret = text(text, labelStyle);
         Label label = new Label(text, labelStyle);
         label.setWrap(true);
         label.setAlignment(Align.center, Align.center);
         label.setWidth(wordWrapWidth);
-//		contentTable.add(label).width(wordWrapWidth).center();
+        getContentTable().add(label).width(wordWrapWidth).center();
         return this;
     }
 
