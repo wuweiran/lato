@@ -133,7 +133,6 @@ public class Stage3D extends InputAdapter implements Disposable,
         // the way to turn off a directional light is to fade it to black
         // all colors must be scaled down anyway, because 2 light sources would overblend
         final float angle = v2.angleDeg();
-//		System.out.println(angle);
         // sun movement: dawn -> 180 -> 90 -> 0 -> dusk (invisible otherwise)
         // sun movement: dawn -> 360 -> 270 -> 180 -> dusk (invisible otherwise)
         float sunIntens = 0.001f;
@@ -229,7 +228,6 @@ public class Stage3D extends InputAdapter implements Disposable,
 //        	camera.zoom-=1;
             camera.translate(0, 0, -1);
         }
-//    	System.out.println("cam z "+ camera.position.z);
     }
 
     /**

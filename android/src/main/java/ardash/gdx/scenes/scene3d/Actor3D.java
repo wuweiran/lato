@@ -311,8 +311,9 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
     }
 
     /**
-     *  Set the actor's yaw
-     *  @param newYaw value must be within 360 degrees
+     * Set the actor's yaw
+     *
+     * @param newYaw value must be within 360 degrees
      */
     public void setYaw(float newYaw) {
         yaw = newYaw;
@@ -320,8 +321,9 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
     }
 
     /**
-     *  Set the actor's pitch
-     *  @param newPitch value must be within 360 degrees
+     * Set the actor's pitch
+     *
+     * @param newPitch value must be within 360 degrees
      */
     public void setPitch(float newPitch) {
         pitch = newPitch;
@@ -329,8 +331,9 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
     }
 
     /**
-     *  Set the actor's roll
-     *  @param newRoll value must be within 360 degrees
+     * Set the actor's roll
+     *
+     * @param newRoll value must be within 360 degrees
      */
     public void setRoll(float newRoll) {
         roll = newRoll;
@@ -632,7 +635,6 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
 
     public void localToScreenCoordinates(Vector2 v) {
         Vector3 position = new Vector3();
-//		System.out.println(center);
 //		transform.getTranslation(position);
 //		v.add(position.x, position.y);
 

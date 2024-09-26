@@ -5,7 +5,9 @@ import android.os.Bundle;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
-/** Launches the Android application. */
+/**
+ * Launches the Android application.
+ */
 public class AndroidLauncher extends AndroidApplication {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

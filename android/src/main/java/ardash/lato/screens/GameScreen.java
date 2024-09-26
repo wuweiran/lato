@@ -438,7 +438,7 @@ public class GameScreen implements Screen {
                 String lblText = "fps: " + Gdx.graphics.getFramesPerSecond();
                 lblText += "\nactors: " + stage3d.getRoot().getChildren().size;
 //				lblText += String.format("\nworld : B %s C %s PC %s", stage3d.world.getBodyCount(), stage3d.world.getContactCount(), performer.currentContacts);
-                lblText += "\nposition:" + performer.getX() + " "  + performer.getY();
+                lblText += "\nposition:" + performer.getX() + " " + performer.getY();
                 lblText += "\nspeed:" + performer.getSpeed() + " " + performer.getSpeedPercentage() * 100f + "%";
                 lblText += "\nt-sections: " + countTSections + " t-segments: " + countTSegments;
                 lblText += String.format("\nculling : drawn %s of %s", Group3D.draw2Count, Group3D.draw1Count);
@@ -534,9 +534,9 @@ public class GameScreen implements Screen {
         lastPerfOutput += delta;
         if (GameManager.DEBUG_PRINT_PERFORMANCE_STATS && lastPerfOutput >= 15f) {
             gm.performanceCounters.tick();
-            System.out.println(gm.performanceCounters.toString(new StringBuilder()));
+            Gdx.app.debug("GameScreen", "Performance counters: " + gm.performanceCounters.toString());
             lastPerfOutput = 0;
-            System.out.println("dc: " + drawCalls + " tb: " + textureBinds + " vc: " + vc + " ss: " + ss + " nc: " + nc);
+            Gdx.app.debug("GameScreen", "dc: " + drawCalls + " tb: " + textureBinds + " vc: " + vc + " ss: " + ss + " nc: " + nc);
         }
         if (GameManager.DEBUG_PRINT_POOL_STATS && lastPerfOutput >= 0.5f) {
             PoolsManager.printStatusOutput();

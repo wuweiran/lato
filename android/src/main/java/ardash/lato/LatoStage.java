@@ -50,12 +50,8 @@ public class LatoStage extends Stage {
 //		// performer has moved, the camera shall follow on the y axis
 //		if (performer != null)
 //		{
-////			System.out.print("cam Y: "+getCamera().position.y);
-////			System.out.println(" per Y: "+performer.getY());
 ////			getCamera().position.y;
 ////			getCamera().translate(0, -(getCamera().position.y - performer.getY()), 0);
-////			System.out.print("pcam Y: "+getCamera().position.y);
-////			System.out.println("p per Y: "+performer.getY());
 //
 //			// point camera to the camspot
 //			getCamera().translate(-(getCamera().position.x - performer.getCamSpot().x)
@@ -68,13 +64,13 @@ public class LatoStage extends Stage {
         OrthographicCamera cam = (OrthographicCamera) getCamera();
         if (Gdx.input.isKeyPressed(Keys.Z)) {
             cam.zoom += 0.01f;
-            System.out.println("zoom: " + cam.zoom);
+            Gdx.app.log("LatoStage", "zoom: " + cam.zoom);
         }
         if (Gdx.input.isKeyPressed(Keys.X)) {
             cam.zoom -= 0.01f;
             if (cam.zoom < 0f) {
                 cam.zoom = 0f;
-                System.out.println("zoom: " + cam.zoom);
+                Gdx.app.log("LatoStage", "zoom: " + cam.zoom);
             }
         }
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
@@ -98,8 +94,6 @@ public class LatoStage extends Stage {
                 performer.setSpeed(performer.getSpeed() + 1);
         }
 
-//		System.out.print("ppos X: "+Gdx.input.getX());
-//		System.out.println("ppos Y: "+Gdx.input.getY());
         pcdra.stop();
     }
 
@@ -139,9 +133,9 @@ public class LatoStage extends Stage {
         tempCoords.y = tempCoords.y;
         Actor firstHitActor = getFirstHitActorAt(tempCoords.x, tempCoords.y);
         if (firstHitActor == null)
-            System.out.print("first hit on [" + tempCoords + "] : NONE");
+            Gdx.app.log("LatoStage", "first hit on [" + tempCoords + "] : NONE");
         else
-            System.out.print("first hit on [" + tempCoords + "] :" + firstHitActor.getName());
+            Gdx.app.log("LatoStage", "first hit on [" + tempCoords + "] :" + firstHitActor.getName());
 
         return a != firstHitActor;
     }

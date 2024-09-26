@@ -259,7 +259,7 @@ public class WeatherProvider extends Actor {
     }
 
     private void sendFogIntensityChange(float targetIntensity, final float duration) {
-        System.out.println("Ordering fog intensity " + targetIntensity + " in " + duration + " sconds");
+        Gdx.app.log("WeatherProvider", "Ordering fog intensity " + targetIntensity + " in " + duration + " sconds");
         for (FogIntensityChangeListener listener : fogIntensityChangeListeners) {
             listener.onFogIntensityChanged(currentFog, targetIntensity, duration);
         }

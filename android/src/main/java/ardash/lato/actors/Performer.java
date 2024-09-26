@@ -476,7 +476,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
     }
 
     public void jump(float jumpforce) {
-        System.out.println("jump : " + isUserInputDown);
+        Gdx.app.log("Performer", "jump : " + isUserInputDown);
         setState(PlayerState.INAIR);
         getActions().clear();
         final float jumpDuration = jumpforce == 0f ? 0f : 0.3f;
@@ -506,7 +506,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
      * touching down after a jump or fall
      */
     private void land() {
-        System.out.println("land()");
+        Gdx.app.log("Performer", "land");
         clearActions();
         final float rotation = getRotation();
 
@@ -561,7 +561,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
     }
 
     public void drop() {
-        System.out.println("drop()");
+        Gdx.app.log("Performer", "drop");
 //		getActions().clear();
         crash(Pose.CRASH_ASS);
         setState(PlayerState.DROPPED);

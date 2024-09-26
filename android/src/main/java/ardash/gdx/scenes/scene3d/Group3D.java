@@ -218,7 +218,6 @@ public class Group3D extends Actor3D {
     private void print(String indent) {
         Actor3D[] actors = children.begin();
         for (int i = 0, n = children.size; i < n; i++) {
-            System.out.println(indent + actors[i]);
             if (actors[i] instanceof Group3D) ((Group3D) actors[i]).print(indent + "|  ");
         }
         children.end();

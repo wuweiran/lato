@@ -129,7 +129,6 @@ public class A {
             for (Character character : allChars) {
                 stringBuilder.append(character);
             }
-            Gdx.app.log("debugggg", stringBuilder.toString());
             parameter.characters = stringBuilder.toString();
             return parameter;
         }
@@ -503,7 +502,6 @@ public class A {
         /**
          * creates the members automatically using its own name as format,
          * happens in a static block after <init>
-         *
          */
         SpriteGroupAsset() {
             this.members = EnumSet.noneOf(ARAsset.class);
