@@ -36,11 +36,4 @@ public class GameOverDialog extends AdvancedDialog implements StageAccessor {
 
 //		getGameScreen().performer.getTimeInState()
     }
-
-//	@Override
-//	public Actor hit(float x, float y, boolean touchable) {
-//		// TODO Auto-generated method stub
-//		return super.hit(x, y, touchable);
-//	}
-
 }

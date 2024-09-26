@@ -71,28 +71,28 @@ public class A {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
                 parameter = defaultParameter((int) Math.ceil(FONT_SIZE_LARGE), 0);
-                generator = A.getFontGenerator(FontGeneratorAsset.UNIFONT);
+                generator = A.getFontGenerator(FontGeneratorAsset.SourceHanSans);
                 generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_LARGE));
+                parameter.borderWidth = 2;
+                parameter.borderColor = parameter.color;
                 F1_30_BOLD.font = generator.generateFont(parameter);
-                F1_30_BOLD.font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 //				generator.dispose(); // do not dispose. it will cause an exception upon app exit
             }
             {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
                 parameter = defaultParameter((int) Math.ceil(FONT_SIZE_SMALL), 0);
-                generator = A.getFontGenerator(FontGeneratorAsset.UNIFONT);
+                generator = A.getFontGenerator(FontGeneratorAsset.SourceHanSans);
                 generator.scaleForPixelHeight((int) Math.ceil(FONT_SIZE_SMALL));
                 F1_15.font = generator.generateFont(parameter);
-                F1_15.font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 //				generator.dispose(); // do not dispose. it will cause an exception upon app exit
             }
 
         }
 
         private static int getActualPixelHeight(int pixelHeight) {
-            float screenDensity = Gdx.graphics.getDensity();
-            return (int) (pixelHeight * screenDensity);
+            float factor = (Gdx.graphics.getDensity() + 1) / 2f;
+            return (int) (pixelHeight * factor);
         }
 
         /* extracted method to save some lines, returns some default params for fonts */
@@ -142,11 +142,11 @@ public class A {
     }
 
     private enum FontGeneratorAsset {
-        UNIFONT;
+        SourceHanSans;
 
         @Override
         public String toString() {
-            return super.toString().toLowerCase(Locale.ENGLISH) + ".ttf"; // example "arial.ttf"
+            return super.toString() + ".ttf"; // example "arial.ttf"
         }
     }
 
