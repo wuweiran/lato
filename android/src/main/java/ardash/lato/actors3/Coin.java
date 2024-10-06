@@ -16,13 +16,9 @@ import ardash.lato.A.ModelAsset;
 import ardash.lato.terrain.CollidingTerrainItem;
 
 public class Coin extends PoolableActor3D implements CollidingTerrainItem {
+    private static final Color emissiveLightColor = Color.GOLD.cpy().lerp(Color.BLACK, 0.15f);
     private boolean hasCollided;
-    private Rectangle bb;
-    private static Color emissiveLightColor = Color.GOLD.cpy();
-
-    static {
-        emissiveLightColor.lerp(Color.BLACK, 0.15f); // make less shiny by moving it 15% towards black
-    }
+    private final Rectangle bb;
 
     public Coin() {
         super(getModel());
@@ -52,8 +48,7 @@ public class Coin extends PoolableActor3D implements CollidingTerrainItem {
     }
 
     private static Model getModel() {
-        Model m = A.getModel(ModelAsset.YCOIN);
-        return m;
+        return A.getModel(ModelAsset.YCOIN);
     }
 
     @Override
@@ -70,6 +65,7 @@ public class Coin extends PoolableActor3D implements CollidingTerrainItem {
         setPitch(MathUtils.random(360f));
     }
 
+    @Override
     public void detectCollision() {
         if (hasCollided)
             return;
@@ -82,9 +78,9 @@ public class Coin extends PoolableActor3D implements CollidingTerrainItem {
     }
 
     public void onCollision() {
+        hasCollided = true;
         remove();
         getGameManager().pickUpCoin();
-        hasCollided = true;
         Pools.free(this);
     }
 

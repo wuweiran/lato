@@ -91,7 +91,7 @@ public class A {
         }
 
         private static int getActualPixelHeight(int pixelHeight) {
-            float factor = (Gdx.graphics.getDensity() + 1) / 2f;
+            float factor = (Gdx.graphics.getDensity() + 0.5f) / 1.5f;
             return (int) (pixelHeight * factor);
         }
 

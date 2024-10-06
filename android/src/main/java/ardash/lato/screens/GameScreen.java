@@ -344,7 +344,7 @@ public class GameScreen implements Screen {
         // postprocessing setup
         ShaderLoader.BasePath = "shaders/";
         postProcessor = new PostProcessor(true, false, isDesktop);
-        Bloom bloom = new Bloom((int) (Gdx.graphics.getWidth() * 0.25f), (int) (Gdx.graphics.getHeight() * 0.25f));
+        Bloom bloom = new Bloom((int) (Gdx.graphics.getWidth() * 0.2f), (int) (Gdx.graphics.getHeight() * 0.2f));
         postProcessor.addEffect(bloom);
         Fxaa fxaa = new Fxaa(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         postProcessor.addEffect(fxaa);
