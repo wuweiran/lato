@@ -28,6 +28,7 @@ hs_err_pid*
 /android/libs/x86_64/
 /android/gen/
 /android/out/
+/android/release/
 local.properties
 com_crashlytics_export_strings.xml
 
