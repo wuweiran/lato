@@ -15,11 +15,12 @@ import ardash.lato.actors.Performer;
 import ardash.lato.actors.Performer.Demise;
 
 public class AbyssCollider extends Image3D implements TerrainItem, Poolable {
+    public static final ModelBuilder mb = new ModelBuilder();
 
     boolean hasCollided;
 
     public AbyssCollider(float x, float y, float width, float height) {
-        super(width, height, getTextureRegion(), getModelBuilder());
+        super(width, height, getTextureRegion(), mb);
         setName("AbyssCollider");
         setTag(Tag.MEGAFRONT); // abyss (center of canyon) is always on center, not in background of foreground
 //		setScale(0.02f, 0.02f, 1);
@@ -34,10 +35,6 @@ public class AbyssCollider extends Image3D implements TerrainItem, Poolable {
      */
     private static AtlasRegion getTextureRegion() {
         return A.getTextureRegion(ARAsset.FOG_PIX);
-    }
-
-    private static ModelBuilder getModelBuilder() {
-        return new ModelBuilder(); // TODO Pool or reuse a static instance
     }
 
     @Override

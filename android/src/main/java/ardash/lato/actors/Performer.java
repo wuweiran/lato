@@ -100,7 +100,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
     //	private float accum = 0;
 //	private float step = 1/60f;
 //
-    @SuppressWarnings("deprecation")
+    @Override
     public void act(float delta) {
         final float previousX = getX();
         final float previousY = getY();

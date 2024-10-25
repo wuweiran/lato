@@ -14,6 +14,7 @@ import ardash.lato.actors.Performer.Pose;
 import ardash.lato.terrain.CollidingTerrainItem;
 
 public class Stone extends Image3D implements CollidingTerrainItem, Poolable {
+    public static final ModelBuilder mb = new ModelBuilder();
 
     private boolean hasCollided;
     private Rectangle bb;
@@ -23,7 +24,7 @@ public class Stone extends Image3D implements CollidingTerrainItem, Poolable {
     }
 
     public Stone(int stoneIndex) {
-        super(getTextureRegion(stoneIndex), getModelBuilder());
+        super(getTextureRegion(stoneIndex), mb);
         setName("Stone");
         setTag(Tag.CENTER); // stones are always on center, not in background of foreground
         setScale(0.02f, 0.02f, 1);
@@ -39,10 +40,6 @@ public class Stone extends Image3D implements CollidingTerrainItem, Poolable {
             return A.getRandomAtlasRegion(SpriteGroupAsset.STONE);
         }
         return A.getTextureRegions("stone").get(stoneIndex);
-    }
-
-    private static ModelBuilder getModelBuilder() {
-        return new ModelBuilder(); // TODO Pool or reuse a static instance
     }
 
     @Override

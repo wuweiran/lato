@@ -10,9 +10,10 @@ import ardash.lato.A;
 import ardash.lato.A.ARAsset;
 
 public class CliffLeft extends Image3D implements TerrainItem, Poolable {
+    public static final ModelBuilder mb = new ModelBuilder();
 
     public CliffLeft(float x, float y) { //, float width, float height) {
-        super(getTextureRegion(), getModelBuilder());
+        super(getTextureRegion(), mb);
         setName("CliffLeft");
         setTag(Tag.MEGAFRONT); // cliffs must be drawn on top of ( in front of the second wave drawer)
         setScale(0.04f, 0.06f, 0.01f);
@@ -26,10 +27,6 @@ public class CliffLeft extends Image3D implements TerrainItem, Poolable {
      */
     private static AtlasRegion getTextureRegion() {
         return A.getTextureRegion(ARAsset.CLIFF_LEFT);
-    }
-
-    private static ModelBuilder getModelBuilder() {
-        return new ModelBuilder(); // TODO Pool or reuse a static instance
     }
 
     @Override

@@ -10,11 +10,12 @@ import ardash.lato.A;
 import ardash.lato.A.ARAsset;
 
 public class AbyssMist extends Image3D implements TerrainItem, Poolable {
+    public static final ModelBuilder mb = new ModelBuilder();
 
     boolean hasCollided;
 
     public AbyssMist(float x, float y, float width, float height) {
-        super(width, height, getTextureRegion(), getModelBuilder());
+        super(width, height, getTextureRegion(), mb);
         setName("AbyssMist");
         setTag(Tag.MEGAFRONT); // abyss (center of canyon) is always on center, not in background of foreground
         setScale(1f, 1f, 0.01f);
@@ -28,10 +29,6 @@ public class AbyssMist extends Image3D implements TerrainItem, Poolable {
      */
     private static AtlasRegion getTextureRegion() {
         return A.getTextureRegion(ARAsset.GLOW);
-    }
-
-    private static ModelBuilder getModelBuilder() {
-        return new ModelBuilder(); // TODO Pool or reuse a static instance
     }
 
     @Override

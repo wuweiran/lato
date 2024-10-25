@@ -109,8 +109,8 @@ public abstract class Filter<T> {
             case 2:
                 program.setUniform2fv(param.mnemonic(), values, offset, length);
                 break;
-            default:
             case 1:
+            default:
                 program.setUniform1fv(param.mnemonic(), values, offset, length);
                 break;
         }
@@ -188,8 +188,8 @@ public abstract class Filter<T> {
             case 2:
                 program.setUniform2fv(param.mnemonic(), values, offset, length);
                 break;
-            default:
             case 1:
+            default:
                 program.setUniform1fv(param.mnemonic(), values, offset, length);
                 break;
         }
