@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing;
 
 public interface PostProcessorListener {

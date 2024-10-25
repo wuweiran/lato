@@ -21,10 +21,6 @@ public class CliffLeft extends Image3D implements TerrainItem, Poolable {
         setColor(Color.WHITE); // The other env colors will draw it in the correct shading
     }
 
-    @Override
-    public void reset() {
-    }
-
     /**
      * -1 for random
      */
@@ -34,6 +30,10 @@ public class CliffLeft extends Image3D implements TerrainItem, Poolable {
 
     private static ModelBuilder getModelBuilder() {
         return new ModelBuilder(); // TODO Pool or reuse a static instance
+    }
+
+    @Override
+    public void reset() {
     }
 
 

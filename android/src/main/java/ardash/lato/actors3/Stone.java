@@ -31,11 +31,6 @@ public class Stone extends Image3D implements CollidingTerrainItem, Poolable {
         this.bb = new Rectangle(getX(), getY(), 1, 1);
     }
 
-    @Override
-    public void reset() {
-        hasCollided = false;
-    }
-
     /**
      * -1 for random
      */
@@ -48,6 +43,11 @@ public class Stone extends Image3D implements CollidingTerrainItem, Poolable {
 
     private static ModelBuilder getModelBuilder() {
         return new ModelBuilder(); // TODO Pool or reuse a static instance
+    }
+
+    @Override
+    public void reset() {
+        hasCollided = false;
     }
 
     @Override

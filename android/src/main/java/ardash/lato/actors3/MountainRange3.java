@@ -14,20 +14,19 @@ import ardash.lato.weather.EnvColors;
 
 public class MountainRange3 extends Group3D {
 
-    /**
-     * speed in units per sec
-     */
-    private float speed = 0f;
-
+    public static final float MOUNT_SIZE = GameScreen.WORLD_WIDTH * 1.19275f;//0.275f;
     /**
      * number of mountains in the mountain range
      */
     private final int numPieces;
     private final float STRETCH_X;
-    public static final float MOUNT_SIZE = GameScreen.WORLD_WIDTH * 1.19275f;//0.275f;
     private final float distanceBetweenPieces = MOUNT_SIZE * 0.77f; //0.77 of above
     private final float VARIANCE = (MOUNT_SIZE + distanceBetweenPieces) / 16f; //(avg of 2 val above) / 4
     private final Color MOUNT_COLOR = new Color(68 / 255f, 145 / 255f, 140 / 255f, 1f);
+    /**
+     * speed in units per sec
+     */
+    private float speed = 0f;
     private Color ambientColor = EnvColors.DAY.ambient;
 
     public MountainRange3(int numPieces, float stretchX) {

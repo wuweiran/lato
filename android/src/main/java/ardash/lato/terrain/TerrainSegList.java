@@ -1,10 +1,10 @@
 package ardash.lato.terrain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 import ardash.lato.terrain.TerrainSeg.TSType;
 

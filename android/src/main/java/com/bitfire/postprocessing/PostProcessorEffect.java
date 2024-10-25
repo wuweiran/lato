@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing;
 
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;

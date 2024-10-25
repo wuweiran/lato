@@ -39,36 +39,29 @@ import ardash.lato.weather.SunColorChangeListener;
 public class Stage3D extends InputAdapter implements Disposable,
     FogIntensityChangeListener, FogColorChangeListener, AmbientColorChangeListener, SunColorChangeListener//, //PerformerListener
 {
+    public static final float MAX_FOG_FAR = 30f;
+    public static final float MIN_FOG_FAR = 50f;
     // the valid zoom interval for the camera to be used to interpolate zooming with current speed
     protected static final float MIN_ZOOM = 0f;
     protected static final float MAX_ZOOM = 40f;
-
-    public static final float MAX_FOG_FAR = 30f;
-    public static final float MIN_FOG_FAR = 50f;
-
     private final ModelBatch modelBatch;
-    private Environment environment;
+    private final Group3D root;
     public Environment dirLightenvironment = new Environment();
-
+    DirectionalLight directedLightSun = new DirectionalLight().set(1.0f, 1.0f, 1.0f, 0f, -0.8f, -0.2f);
+    DirectionalLight directedLightMoon = new DirectionalLight().set(1.0f, 1.0f, 1.0f, 0f, -0.8f, -0.2f);
+    boolean directedLightIsSun = true;
+    private Environment environment;
     /**
      * A color instance that hold the current fog color. It will be changed and applied to the enviroment every frame.
      */
     private Color fogColor = EnvColors.DAY.fog.cpy();
-
     /**
      * A color instance that hold the current ambient color. It will be changed and applied to the enviroment every frame.
      */
     private Color ambientColor = EnvColors.DAY.ambient.cpy();
-
-    DirectionalLight directedLightSun = new DirectionalLight().set(1.0f, 1.0f, 1.0f, 0f, -0.8f, -0.2f);
-    DirectionalLight directedLightMoon = new DirectionalLight().set(1.0f, 1.0f, 1.0f, 0f, -0.8f, -0.2f);
-    boolean directedLightIsSun = true;
-
     //    private Camera3D camera;
 //    private OrthographicCamera camera;
     private Viewport viewport;
-
-    private final Group3D root;
     private FloatAction fodIntensityAction;
 
     /**
@@ -330,12 +323,12 @@ public class Stage3D extends InputAdapter implements Disposable,
         return root;
     }
 
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
-
     public Environment getEnvironment() {
         return environment;
+    }
+
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
     }
 
     public Actor3D getObject(int screenX, int screenY) {

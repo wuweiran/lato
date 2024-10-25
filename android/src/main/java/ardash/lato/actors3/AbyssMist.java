@@ -23,11 +23,6 @@ public class AbyssMist extends Image3D implements TerrainItem, Poolable {
         setColor(Color.WHITE);
     }
 
-    @Override
-    public void reset() {
-        hasCollided = false;
-    }
-
     /**
      * -1 for random
      */
@@ -37,6 +32,11 @@ public class AbyssMist extends Image3D implements TerrainItem, Poolable {
 
     private static ModelBuilder getModelBuilder() {
         return new ModelBuilder(); // TODO Pool or reuse a static instance
+    }
+
+    @Override
+    public void reset() {
+        hasCollided = false;
     }
 
 }

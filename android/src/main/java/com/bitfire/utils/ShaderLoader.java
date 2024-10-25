@@ -1,5 +1,3 @@
-
-
 package com.bitfire.utils;
 
 import com.badlogic.gdx.Gdx;
@@ -9,6 +7,9 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 public final class ShaderLoader {
     public static String BasePath = "";
     public static boolean Pedantic = true;
+
+    private ShaderLoader() {
+    }
 
     public static ShaderProgram fromFile(String vertexFileName, String fragmentFileName) {
         return ShaderLoader.fromFile(vertexFileName, fragmentFileName, "");
@@ -42,8 +43,5 @@ public final class ShaderLoader {
         }
 
         return shader;
-    }
-
-    private ShaderLoader() {
     }
 }

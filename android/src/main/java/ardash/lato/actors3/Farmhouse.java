@@ -33,14 +33,14 @@ public class Farmhouse extends PoolableActor3D implements TerrainItem {
 //        model.materials.get(0).remove(ColorAttribute.Diffuse);
     }
 
+    private static Model getModel() {
+        return A.getModel(ModelAsset.FARMHOUSE);
+    }
+
     @Override
     public void draw(ModelBatch modelBatch, Environment environment) {
         // TODO Auto-generated method stub
         super.draw(modelBatch, getStage().dirLightenvironment);
-    }
-
-    private static Model getModel() {
-        return A.getModel(ModelAsset.FARMHOUSE);
     }
 
     @Override

@@ -1,10 +1,22 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.bitfire.utils.ShaderLoader;
 
 public class Copy extends Filter<Copy> {
+    public Copy() {
+        super(ShaderLoader.fromFile("screenspace", "copy"));
+    }
+
+    @Override
+    public void rebind() {
+        setParam(Param.Texture0, u_texture0);
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        inputTexture.bind(u_texture0);
+    }
+
     public enum Param implements Parameter {
         // @formatter:off
 		Texture0("u_texture0", 0), ;
@@ -27,19 +39,5 @@ public class Copy extends Filter<Copy> {
         public int arrayElementSize() {
             return this.elementSize;
         }
-    }
-
-    public Copy() {
-        super(ShaderLoader.fromFile("screenspace", "copy"));
-    }
-
-    @Override
-    public void rebind() {
-        setParam(Param.Texture0, u_texture0);
-    }
-
-    @Override
-    protected void onBeforeRender() {
-        inputTexture.bind(u_texture0);
     }
 }

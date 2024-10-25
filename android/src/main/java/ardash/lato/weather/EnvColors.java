@@ -1,5 +1,3 @@
-
-
 package ardash.lato.weather;
 
 import com.badlogic.gdx.graphics.Color;

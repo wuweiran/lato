@@ -1,8 +1,5 @@
 package ardash.lato.actors;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
@@ -15,6 +12,9 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ardash.gdx.scenes.scene3d.Group3D;
 import ardash.lato.GameManager;
@@ -45,9 +45,9 @@ public class WaveDrawer extends Group3D implements Disposable, AmbientColorChang
     public static final float DRAW_STEPS = 0.5f; // 8.8 good with edges of abyss
 
     private final ModelBuilder modelBuilder = new ModelBuilder();
-    private AdvShapeRenderer sr;
     TerrainSegList terrainSegmentList;
     Vector2 tmpVector = new Vector2(); // can be used by one method atomically
+    private AdvShapeRenderer sr;
     private Actor ambientColorContainer = new Actor();
 
     /**

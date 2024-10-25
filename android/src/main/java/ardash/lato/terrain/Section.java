@@ -1,9 +1,9 @@
 package ardash.lato.terrain;
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.badlogic.gdx.math.Vector2;
 
 import ardash.gdx.scenes.scene3d.Actor3D.Tag;
 import ardash.lato.GameManager;

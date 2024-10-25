@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 
 public class NoAlphaColorAction2D extends ColorAction {
-    private float startR, startG, startB;
     private final Color noAlphaEnd = new Color();
+    private float startR, startG, startB;
 
     protected void begin() {
         if (getColor() == null) setColor(getActor().getColor());

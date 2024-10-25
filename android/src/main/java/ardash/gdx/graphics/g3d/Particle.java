@@ -1,4 +1,3 @@
-
 package ardash.gdx.graphics.g3d;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

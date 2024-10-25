@@ -3,8 +3,8 @@ package ardash.gdx.scenes.scene3d.actions;
 import com.badlogic.gdx.graphics.Color;
 
 public class NoAlphaColorAction extends ColorAction {
-    private float startR, startG, startB;
     private final Color noAlphaEnd = new Color();
+    private float startR, startG, startB;
 
     protected void begin() {
         if (getColor() == null) setColor(actor.getColor());

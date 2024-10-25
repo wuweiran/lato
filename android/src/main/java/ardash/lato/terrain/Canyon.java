@@ -1,4 +1,3 @@
-
 package ardash.lato.terrain;
 
 import com.badlogic.gdx.math.Interpolation;

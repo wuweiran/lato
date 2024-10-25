@@ -1,4 +1,3 @@
-
 package ardash.lato.actors;
 
 import com.badlogic.gdx.graphics.Color;
@@ -19,6 +18,7 @@ public class Scarf extends Group3D {
     public static final float SEG_THICK = 0.1f;
     public static final Color SCARF_COLOUR_1 = new Color(0xbc6d56ff);
     public static final Color SCARF_COLOUR_2 = new Color(0xa83c40ff);
+    int currentAmountOfSegments = -1;
     private float[] x = new float[20];
     private float[] y = new float[20];
 
@@ -90,8 +90,6 @@ public class Scarf extends Group3D {
         final int rounded = MathUtils.roundPositive(clamped);
         setLength(rounded);
     }
-
-    int currentAmountOfSegments = -1;
 
     private void setLength(int amountOfSegments) {
         if (amountOfSegments == currentAmountOfSegments)

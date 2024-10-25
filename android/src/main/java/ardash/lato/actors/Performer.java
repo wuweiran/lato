@@ -1,11 +1,4 @@
-
-
 package ardash.lato.actors;
-
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -18,6 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.bitfire.postprocessing.effects.Zoomer;
 import com.bitfire.postprocessing.filters.RadialBlur.Quality;
+
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 
 import ardash.gdx.graphics.g3d.ParticleEmitter;
 import ardash.gdx.graphics.g3d.ParticleEmitter.ParticleEmitterType;
@@ -35,42 +33,31 @@ import ardash.lato.screens.GameOverDialog;
 import ardash.lato.weather.AmbientColorChangeListener;
 
 public class Performer extends Group3D implements Disposable, AmbientColorChangeListener {
-    public enum Pose {
-        RIDE, DUCK, JUMP, CRASH_ASS, CRASH_NOSE//, ROLL, FLY, CRASHED, GRIND
-    }
-
-    public enum Demise {
-        NONE, LAND_ON_ASS, LAND_ON_NOSE, LAND_ON_STONE, HIT_STONE, DROP_IN_CANYON;
-    }
-
+    public static final float MIN_SPEED = 9.3f;
     private static final float ROTATION_SPEED = 180f; // TODO (deg/sec) this could be different for different performers or boards
     private static final float PERFORMER_WIDTH = 1.85f;
-    public static final float MIN_SPEED = 9.3f;
     private static final float MAX_SPEED = 29.3f;
     private static final float MIN_CAM_SPOT_X = 10f;
     private static final float MAX_CAM_SPOT_X = 24f;
     private static final float JUMP_FORCE = PERFORMER_WIDTH * 1.9f;
-
+    //	private float direction = 0f; // current rotation (direction) in degrees
+    private final Vector2 velocity = new Vector2(); // this is only here to safe new-calls
+    private final List<PerformerListener> listeners = new ArrayList<PerformerListener>();
+    private final Map<Pose, Image3D> poses = new EnumMap<Pose, Image3D>(Pose.class);
+    private final Vector2 scarfAttachPoint = new Vector2(0, 0);
+    public Rectangle bb;
+    protected ParticleEmitter spray = new ParticleEmitter(ParticleEmitterType.SNOW);
+    protected Pose pose = Pose.RIDE;
+    protected PlayerState state = PlayerState.INIT;
     private float speed = 0f; // speed in m/s
     private float runtime = 0f; // lifetime starting after game started
     private boolean isUserInputDown = false;
-    //	private float direction = 0f; // current rotation (direction) in degrees
-    private final Vector2 velocity = new Vector2(); // this is only here to safe new-calls
-    protected ParticleEmitter spray = new ParticleEmitter(ParticleEmitterType.SNOW);
-    private final List<PerformerListener> listeners = new ArrayList<PerformerListener>();
-    private final Map<Pose, Image3D> poses = new EnumMap<Pose, Image3D>(Pose.class);
-    protected Pose pose = Pose.RIDE;
-    protected PlayerState state = PlayerState.INIT;
     private Demise causeOfDeath = Demise.NONE;
-
-    private final Vector2 scarfAttachPoint = new Vector2(0, 0);
-
     /**
      * vertical speed is intentionally not in a vector with 'speed' because the velocity is handled differently
      * depending on if actor is in air or on ground. Physics on ground are not realistic to improve gameplay.
      */
     private float vspeed = 0f; // speed in m/s
-
     /**
      * A spot in front of the actor, where he wants the camera to look at. Usually a few meters in front of the actor.
      */
@@ -79,14 +66,6 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
     private float airTime;
     private float timeInState;
     private float startedAtX = -1;
-    public Rectangle bb;
-
-    public interface PerformerListener {
-        void onPositionChange(float newX, float newY);
-
-        void onSpeedChanged(float newSpeed, float percentage);
-    }
-
     public Performer() {
         ModelBuilder mb = new ModelBuilder();
         setName("Performer");
@@ -377,16 +356,16 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
         return state.isStarted() ? (runtime > 1f ? 3.3f : 03.3f) : 0.03f;
     }
 
+    public Pose getPose() {
+        return pose;
+    }
+
     public void setPose(Pose pose) {
         this.pose = pose;
         for (Actor3D a : getChildren()) {
             a.setVisible(false);
         }
         poses.get(pose).setVisible(true);
-    }
-
-    public Pose getPose() {
-        return pose;
     }
 
     public float getSpeed() {
@@ -632,11 +611,25 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
         return (int) dist;
     }
 
+    public Demise getCauseOfDeath() {
+        return causeOfDeath;
+    }
+
     public void setCauseOfDeath(Demise causeOfDeath) {
         this.causeOfDeath = causeOfDeath;
     }
 
-    public Demise getCauseOfDeath() {
-        return causeOfDeath;
+    public enum Pose {
+        RIDE, DUCK, JUMP, CRASH_ASS, CRASH_NOSE//, ROLL, FLY, CRASHED, GRIND
+    }
+
+    public enum Demise {
+        NONE, LAND_ON_ASS, LAND_ON_NOSE, LAND_ON_STONE, HIT_STONE, DROP_IN_CANYON;
+    }
+
+    public interface PerformerListener {
+        void onPositionChange(float newX, float newY);
+
+        void onSpeedChanged(float newSpeed, float percentage);
     }
 }

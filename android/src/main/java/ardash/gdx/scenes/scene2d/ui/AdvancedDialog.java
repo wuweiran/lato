@@ -1,4 +1,3 @@
-
 package ardash.gdx.scenes.scene2d.ui;
 
 import com.badlogic.gdx.Gdx;

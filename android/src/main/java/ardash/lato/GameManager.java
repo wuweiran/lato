@@ -1,5 +1,3 @@
-
-
 package ardash.lato;
 
 import com.badlogic.gdx.Screen;
@@ -55,12 +53,12 @@ public class GameManager implements SODChangeListener {
         return (GameScreen) game.getScreen();
     }
 
-    public void setStarted(boolean started) {
-        this.started = started;
-    }
-
     private boolean isStarted() {
         return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
     }
 
     @Override

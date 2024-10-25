@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing.effects;
 
 import com.badlogic.gdx.Gdx;
@@ -95,24 +93,12 @@ public final class CrtMonitor extends PostProcessorEffect {
         crt.setChromaticDispersionBY(blueYellow);
     }
 
-    public void setTint(Color tint) {
-        crt.setTint(tint);
-    }
-
     public void setTint(float r, float g, float b) {
         crt.setTint(r, g, b);
     }
 
     public void setDistortion(float distortion) {
         crt.setDistortion(distortion);
-    }
-
-    public void setZoom(float zoom) {
-        crt.setZoom(zoom);
-    }
-
-    public void setRgbMode(RgbMode mode) {
-        crt.setRgbMode(mode);
     }
 
     // getters
@@ -132,12 +118,24 @@ public final class CrtMonitor extends PostProcessorEffect {
         return crt.getZoom();
     }
 
+    public void setZoom(float zoom) {
+        crt.setZoom(zoom);
+    }
+
     public Color getTint() {
         return crt.getTint();
     }
 
+    public void setTint(Color tint) {
+        crt.setTint(tint);
+    }
+
     public RgbMode getRgbMode() {
         return crt.getRgbMode();
+    }
+
+    public void setRgbMode(RgbMode mode) {
+        crt.setRgbMode(mode);
     }
 
     @Override

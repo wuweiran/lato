@@ -9,10 +9,10 @@ import com.badlogic.gdx.graphics.g3d.utils.DefaultShaderProvider;
 import ardash.lato.screens.GameScreen.LatoShaders;
 
 public class LatoShaderProvider extends DefaultShaderProvider {
+    private final LatoShaders shaderType;
     DefaultShader.Config xshader;
     DefaultShader.Config fogshader;
     DefaultShader.Config toonshader;
-    private final LatoShaders shaderType;
 
     public LatoShaderProvider(DefaultShader.Config defaultConfig, LatoShaders ls) {
         super(defaultConfig);

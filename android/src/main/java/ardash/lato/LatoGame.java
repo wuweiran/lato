@@ -1,8 +1,4 @@
-
-
 package ardash.lato;
-
-import android.content.Context;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;

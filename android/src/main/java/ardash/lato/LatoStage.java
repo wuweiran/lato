@@ -21,12 +21,11 @@ public class LatoStage extends Stage {
     // the valid zoom interval for the camera to be used to interpolate zooming with current speed
     protected static final float MIN_ZOOM = 1f;
     protected static final float MAX_ZOOM = 2.08f;
-
-    private Performer performer = null;
-    private WaveDrawer waveDrawer = null;
     private final String name;
     protected PerformanceCounter pcact;
     protected PerformanceCounter pcdra;
+    private Performer performer = null;
+    private WaveDrawer waveDrawer = null;
 
     public LatoStage(Viewport vp, String name) {
         super(vp);
@@ -34,6 +33,35 @@ public class LatoStage extends Stage {
         pcact = Actor3D.getGameManager().performanceCounters.add("stage act " + name);
         pcdra = Actor3D.getGameManager().performanceCounters.add("stage dra " + name);
         getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false); // override super constructor
+    }
+
+    /**
+     * Removes the given actor from the given group, and disposes the actor. Also,
+     * if the actor itself is a Group, its children are cleared and disposed
+     * recursively.
+     *
+     * @param actor
+     * @param group
+     */
+    public static void removeAndDispose(Actor actor, Group group) {
+        if (actor instanceof Group) {
+            clearAndDisposeActors((Group) actor);
+        }
+        group.removeActor(actor);
+        disposeObject(actor);
+    }
+
+    public static void clearAndDisposeActors(Group group) {
+        for (Actor actor : group.getChildren().items) {
+            removeAndDispose(actor, group);
+        }
+        group.clearChildren();
+    }
+
+    public static void disposeObject(Object object) {
+        if (object instanceof Disposable disposable) {
+            disposable.dispose();
+        }
     }
 
     @Override
@@ -115,6 +143,14 @@ public class LatoStage extends Stage {
         return target;
     }
 
+//	public WaveDrawer getWaveDrawer() {
+//		return waveDrawer;
+//	}
+//
+//	public void setWaveDrawer(WaveDrawer waveDrawer) {
+//		this.waveDrawer = waveDrawer;
+//	}
+
     /**
      * Checks if the center of the Actor is covered by any other actor on the stage.
      * This is like a realistic implementation of Actor.isHidden();
@@ -150,48 +186,11 @@ public class LatoStage extends Stage {
         this.performer = performer;
     }
 
-//	public WaveDrawer getWaveDrawer() {
-//		return waveDrawer;
-//	}
-//
-//	public void setWaveDrawer(WaveDrawer waveDrawer) {
-//		this.waveDrawer = waveDrawer;
-//	}
-
     @Override
     public void dispose() {
         // parent implementation clears root, so call that after we disposed all content
         clearAndDisposeActors(getRoot());
         super.dispose();
-    }
-
-    /**
-     * Removes the given actor from the given group, and disposes the actor. Also,
-     * if the actor itself is a Group, its children are cleared and disposed
-     * recursively.
-     *
-     * @param actor
-     * @param group
-     */
-    public static void removeAndDispose(Actor actor, Group group) {
-        if (actor instanceof Group) {
-            clearAndDisposeActors((Group) actor);
-        }
-        group.removeActor(actor);
-        disposeObject(actor);
-    }
-
-    public static void clearAndDisposeActors(Group group) {
-        for (Actor actor : group.getChildren().items) {
-            removeAndDispose(actor, group);
-        }
-        group.clearChildren();
-    }
-
-    public static void disposeObject(Object object) {
-        if (object instanceof Disposable disposable) {
-            disposable.dispose();
-        }
     }
 
 ////	@Override

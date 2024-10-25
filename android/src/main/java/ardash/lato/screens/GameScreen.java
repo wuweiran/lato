@@ -21,7 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.PerformanceCounter;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.bitfire.postprocessing.PostProcessor;
@@ -56,17 +55,19 @@ import ardash.lato.weather.WeatherProvider;
 
 public class GameScreen implements Screen {
 
+    // post processing:
+    private static final boolean isDesktop = (Gdx.app.getType() == ApplicationType.Desktop);
     //	The world adjusted to MDPI/10 , the smallest expectable device.
     public static float WORLD_WIDTH = 35.59f; // visible meters from left to right, with default zoom on smallest display
     public static float WORLD_HEIGHT = 26.76f;
-    public static float SNOWBOARD_LENGTH = 1.85f; // length of snowboard in meters
-
     /**
      * The actual world-width in the viewport can be taken from Stage.Viewport.WorldWidth
      */
     public static final float MAX_WORLD_WIDTH = WORLD_HEIGHT * (19f / 9f); // on 19/9 display , we don't need to draw farer than this
     public static float CURRENT_WORLD_WIDTH = MAX_WORLD_WIDTH;      // current on display , we don't need to draw farer than this
-
+    public static float SNOWBOARD_LENGTH = 1.85f; // length of snowboard in meters
+    // Add this class member
+    private final GLProfiler profiler;
     public GameManager gm;
     public WeatherProvider weather;
     public LatoStage backStage;
@@ -78,20 +79,11 @@ public class GameScreen implements Screen {
     public Performer performer;
     public Scarf scarf;
     public WaveDrawer waveDrawer;
+    public PostProcessor postProcessor;
     PerformanceCounter perf;
     float lastPerfOutput = 0;
-
-    public enum LatoShaders {BACK, THREED}
-
-    // Add this class member
-    private final GLProfiler profiler;
     private int CURRENT_SCREEN_WIDTH;
     private int CURRENT_SCREEN_SCREEN;
-
-    // post processing:
-    private static final boolean isDesktop = (Gdx.app.getType() == ApplicationType.Desktop);
-    public PostProcessor postProcessor;
-
     public GameScreen(GameManager gm) {
         this.gm = gm;
         gm.reset();
@@ -101,7 +93,6 @@ public class GameScreen implements Screen {
         profiler = new GLProfiler(Gdx.graphics);
         profiler.enable();
     }
-
 
     /*
      * layers:
@@ -285,6 +276,10 @@ public class GameScreen implements Screen {
         final Camera3D cam = (Camera3D) stage3d.getCamera();
         // connect cameras to Performer
         performer.addListener(new PerformerListener() {
+            // the valid zoom interval for the camera to be used to interpolate zooming with current speed
+            private static final float MIN_ZOOM = 0f;
+            private static final float MAX_ZOOM = 40f;
+            Float initZ = null;
             private float lastx, lasty, lastz = 40;
 
             @Override
@@ -307,11 +302,6 @@ public class GameScreen implements Screen {
                 final Vector2 newScarfPosition = performer.getScarfAttachPointInStageCoords();
                 scarf.setPosition(newScarfPosition.x, newScarfPosition.y);
             }
-
-            // the valid zoom interval for the camera to be used to interpolate zooming with current speed
-            private static final float MIN_ZOOM = 0f;
-            private static final float MAX_ZOOM = 40f;
-            Float initZ = null;
 
             @Override
             public void onSpeedChanged(float newSpeed, float percentage) {
@@ -588,5 +578,7 @@ public class GameScreen implements Screen {
         postProcessor.dispose();
 
     }
+
+    public enum LatoShaders {BACK, THREED}
 
 }

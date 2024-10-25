@@ -1,8 +1,5 @@
 package ardash.lato.actors;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -16,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import ardash.lato.A;
 import ardash.lato.A.ARAsset;
@@ -32,17 +32,13 @@ public class SkyPlane extends Group implements StageAccessor, Disposable, SkyCol
     private static final float SUN_WIDTH = 2;
     private static final float MIN_STAR_SIZE = 0.1f;
     private static final float MAX_STAR_SIZE = 0.2f;
+    RandomXS128 rand = new RandomXS128(8793246527834L);
     private ShapeRenderer sr;
     private Group sunRotor, stars;
     private Image iSunGlow, iSun, iMoonGlow, iMoon;
     private Actor sunFlare, moonFlare;
     private Actor topColorHolder, bottomColorHolder, fogColorHolder;
     private List<SkyPlaneListener> listeners = new LinkedList<SkyPlaneListener>();
-    RandomXS128 rand = new RandomXS128(8793246527834L);
-
-    public interface SkyPlaneListener {
-        void onSunDirectionChanged(float newAngle);
-    }
 
     public SkyPlane(float width, float height) {
         setSize(width, height);
@@ -260,6 +256,10 @@ public class SkyPlane extends Group implements StageAccessor, Disposable, SkyCol
     @Override
     public void dispose() {
         sr.dispose();
+    }
+
+    public interface SkyPlaneListener {
+        void onSunDirectionChanged(float newAngle);
     }
 
 }

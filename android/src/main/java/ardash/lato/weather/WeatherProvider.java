@@ -1,10 +1,4 @@
-
-
 package ardash.lato.weather;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -14,14 +8,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.FloatAction;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import ardash.lato.GameManager;
 import ardash.lato.actions.MoreActions;
 
 public class WeatherProvider extends Actor {
-
-    public enum Precipitation {
-        RAIN, SNOW, FOG, CLEAR; // STORM is a sub-mode of RAIN
-    }
 
     public static final boolean FASTMODE = GameManager.DEBUG_WEATHER_FASTMODE;
     public static final float DAYTIME_HOURS = 16f;
@@ -39,7 +33,13 @@ public class WeatherProvider extends Actor {
     public static final float MAX_FOG = 0.04f;
     public static final float MAX_FOG_NO_PRECIPITATION = (MAX_FOG + MIN_FOG) / 2f;
     public static final float FOG_STEPS = (MAX_FOG - MIN_FOG) / 20f; // for calibration with keyboard
-
+    private final List<AmbientColorChangeListener> ambientColorChangeListeners = new ArrayList<>(4);
+    private final List<FogColorChangeListener> fogColorChangeListeners = new ArrayList<>(4);
+    private final List<FogIntensityChangeListener> fogIntensityChangeListeners = new ArrayList<>(4);
+    private final List<PrecipitationChangeListener> precipitationChangeListeners = new ArrayList<PrecipitationChangeListener>(4);
+    private final List<SkyColorChangeListener> skyColorChangeListeners = new ArrayList<>(4);
+    private final List<SunColorChangeListener> sunColorChangeListeners = new ArrayList<>(4);
+    private final List<SODChangeListener> sodChangeListeners = new ArrayList<>(4);
     /**
      * current Second Of Day. A value from 0 to 24 * SECONDS_PER_HOUR
      */
@@ -48,16 +48,7 @@ public class WeatherProvider extends Actor {
     float currentFog = MIN_FOG;
     Precipitation currentPrecip = Precipitation.CLEAR;
     FloatAction currentPrecipAction = null;
-
-    private final List<AmbientColorChangeListener> ambientColorChangeListeners = new ArrayList<>(4);
-    private final List<FogColorChangeListener> fogColorChangeListeners = new ArrayList<>(4);
-    private final List<FogIntensityChangeListener> fogIntensityChangeListeners = new ArrayList<>(4);
-    private final List<PrecipitationChangeListener> precipitationChangeListeners = new ArrayList<PrecipitationChangeListener>(4);
-    private final List<SkyColorChangeListener> skyColorChangeListeners = new ArrayList<>(4);
-    private final List<SunColorChangeListener> sunColorChangeListeners = new ArrayList<>(4);
-    private final List<SODChangeListener> sodChangeListeners = new ArrayList<>(4);
     private boolean isInitialised = false;
-
     /**
      * @param initialTimeOfDay example: 10.5 = 10:30 am
      */
@@ -342,6 +333,10 @@ public class WeatherProvider extends Actor {
 
     public Precipitation getCurrentPrecip() {
         return currentPrecip;
+    }
+
+    public enum Precipitation {
+        RAIN, SNOW, FOG, CLEAR; // STORM is a sub-mode of RAIN
     }
 
 

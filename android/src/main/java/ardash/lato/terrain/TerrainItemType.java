@@ -1,4 +1,3 @@
-
 package ardash.lato.terrain;
 
 public enum TerrainItemType {

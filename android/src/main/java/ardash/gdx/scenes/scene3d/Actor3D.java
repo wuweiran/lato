@@ -1,5 +1,3 @@
-
-
 package ardash.gdx.scenes.scene3d;
 
 import com.badlogic.gdx.Gdx;
@@ -34,47 +32,28 @@ import ardash.lato.screens.GameScreen;
 
 @SuppressWarnings("rawtypes")
 public class Actor3D extends ModelInstance implements Disposable, Cullable {
-    public enum Tag {
-        FRONT, BACK, CENTER,
-
-        /**
-         * Draw something in front if the second wave-drawer (cliffs)
-         */
-        MEGAFRONT,
-
-        // and even more in the front (like clouds in front of cliff)
-        GIGAFRONT
-    }
-
-    private Tag tag;
-
-    private Stage3D stage3D;
-    private Group3D parent;
-
-    private final DelayedRemovalArray<Event3DListener> listeners = new DelayedRemovalArray<>(0);
-    private final Array<Action3D> actions = new Array<>(0);
-
     public final Vector3 center = new Vector3();
     public final Vector3 dimensions = new Vector3();
-    private BoundingBox boundBox = new BoundingBox();
     public final float radius;
-
-    private String name;
-    private boolean visible = true;
-
+    private final DelayedRemovalArray<Event3DListener> listeners = new DelayedRemovalArray<>(0);
+    private final Array<Action3D> actions = new Array<>(0);
+    private final AnimationController animation;
     // Debug tools
     protected boolean debug;
     protected ModelInstance axis;
-    private ModelBuilder modelBuilder;
-
+    protected float originX = 0, originY = 0;
     // local transformations to be applied each frame before render
     float x, y, z;
     float scaleX = 1, scaleY = 1, scaleZ = 1;
     float yaw = 0f, pitch = 0f, roll = 0f;
     Matrix4 rotationMatrix = new Matrix4();
-    private final AnimationController animation;
-
-    protected float originX = 0, originY = 0;
+    private Tag tag;
+    private Stage3D stage3D;
+    private Group3D parent;
+    private BoundingBox boundBox = new BoundingBox();
+    private String name;
+    private boolean visible = true;
+    private ModelBuilder modelBuilder;
 
     public Actor3D() {
         this(new Model());
@@ -93,6 +72,22 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         dimensions.set(boundBox.getDimensions(new Vector3()));
         radius = dimensions.len() / 2f;
         animation = new AnimationController(this);
+    }
+
+    public static float normalizeDegrees(float degrees) {
+        float newAngle = degrees;
+        while (newAngle < -360) newAngle += 360;
+        while (newAngle > 360) newAngle -= 360;
+        return newAngle;
+    }
+
+    public static GameManager getGameManager() {
+        LatoGame game = (LatoGame) Gdx.app.getApplicationListener();
+        return game.gm;
+    }
+
+    public static GameScreen getGameScreen() {
+        return getGameManager().getGameScreen();
     }
 
     /**
@@ -204,19 +199,19 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
     }
 
     /**
+     * Returns the stage3D that this actor is currently in, or null if not in a stage.
+     */
+    public Stage3D getStage() {
+        return stage3D;
+    }
+
+    /**
      * Called by the framework when this actor or any parent is added to a group that is in the stage3D.
      *
      * @param stage May be null if the actor or any parent is no longer in a stage.
      */
     protected void setStage(Stage3D stage) {
         this.stage3D = stage;
-    }
-
-    /**
-     * Returns the stage3D that this actor is currently in, or null if not in a stage.
-     */
-    public Stage3D getStage() {
-        return stage3D;
     }
 
     /**
@@ -310,44 +305,6 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
     }
 
-    /**
-     * Set the actor's yaw
-     *
-     * @param newYaw value must be within 360 degrees
-     */
-    public void setYaw(float newYaw) {
-        yaw = newYaw;
-        rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
-    }
-
-    /**
-     * Set the actor's pitch
-     *
-     * @param newPitch value must be within 360 degrees
-     */
-    public void setPitch(float newPitch) {
-        pitch = newPitch;
-        rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
-    }
-
-    /**
-     * Set the actor's roll
-     *
-     * @param newRoll value must be within 360 degrees
-     */
-    public void setRoll(float newRoll) {
-        roll = newRoll;
-        rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
-    }
-
-
-    public static float normalizeDegrees(float degrees) {
-        float newAngle = degrees;
-        while (newAngle < -360) newAngle += 360;
-        while (newAngle > 360) newAngle -= 360;
-        return newAngle;
-    }
-
     /*
      *  Rotates the actor by the amount of yaw, pitch and roll
      *  amountYaw, amountPitch, amountRoll These values must be within 360 degrees
@@ -378,12 +335,42 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         return yaw;
     }
 
+    /**
+     * Set the actor's yaw
+     *
+     * @param newYaw value must be within 360 degrees
+     */
+    public void setYaw(float newYaw) {
+        yaw = newYaw;
+        rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
+    }
+
     public float getPitch() {
         return pitch;
     }
 
+    /**
+     * Set the actor's pitch
+     *
+     * @param newPitch value must be within 360 degrees
+     */
+    public void setPitch(float newPitch) {
+        pitch = newPitch;
+        rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
+    }
+
     public float getRoll() {
         return roll;
+    }
+
+    /**
+     * Set the actor's roll
+     *
+     * @param newRoll value must be within 360 degrees
+     */
+    public void setRoll(float newRoll) {
+        roll = newRoll;
+        rotationMatrix = new Matrix4().setFromEulerAngles(pitch, roll, yaw).cpy();
     }
 
     public void setScale(float scaleX, float scaleY, float scaleZ) {
@@ -413,37 +400,40 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         this.scaleZ += scaleZ;
     }
 
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
     public float getX() {
         return x;
     }
 
-    public void setY(float y) {
-        this.y = y;
+    public void setX(float x) {
+        this.x = x;
     }
 
     public float getY() {
         return y;
     }
 
-    public void setZ(float z) {
-        this.z = z;
+    public void setY(float y) {
+        this.y = y;
     }
 
     public float getZ() {
         return z;
     }
 
-    public void setScaleX(float scaleX) {
-        this.scaleX = scaleX;
+    public void setZ(float z) {
+        this.z = z;
     }
 
     public float getScaleX() {
         return scaleX;
+    }
+
+    public void setScaleX(float scaleX) {
+        this.scaleX = scaleX;
+    }
+
+    public float getScaleY() {
+        return scaleY;
     }
 
     public void setScaleY(float scaleY) {
@@ -451,8 +441,8 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
 //        transform.scale(scaleX, scaleY, scaleZ);
     }
 
-    public float getScaleY() {
-        return scaleY;
+    public float getScaleZ() {
+        return scaleZ;
     }
 
     public void setScaleZ(float scaleZ) {
@@ -460,8 +450,8 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
 //        transform.scale(scaleX, scaleY, scaleZ);
     }
 
-    public float getScaleZ() {
-        return scaleZ;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -472,10 +462,6 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
     public void setName(String name) {
         this.name = name;
 
-    }
-
-    public String getName() {
-        return name;
     }
 
     /**
@@ -514,12 +500,12 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         }
     }
 
-    public void setDebug(boolean enabled) {
-        setDebug(enabled, new ModelBuilder());
-    }
-
     public boolean getDebug() {
         return debug;
+    }
+
+    public void setDebug(boolean enabled) {
+        setDebug(enabled, new ModelBuilder());
     }
 
     public void setModelBuilder(ModelBuilder modelBuilder) {
@@ -581,11 +567,6 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         setPosition(x, y, z);
     }
 
-    public void setRotation(float f) {
-        setYaw(f);
-//		setYaw(f*MathUtils.degreesToRadians);
-    }
-
     public void rotateBy(float degrees) {
         rotateYaw(degrees);
     }
@@ -595,14 +576,9 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
 //    	return getYaw()*MathUtils.radiansToDegrees;
     }
 
-
-    public static GameManager getGameManager() {
-        LatoGame game = (LatoGame) Gdx.app.getApplicationListener();
-        return game.gm;
-    }
-
-    public static GameScreen getGameScreen() {
-        return getGameManager().getGameScreen();
+    public void setRotation(float f) {
+        setYaw(f);
+//		setYaw(f*MathUtils.degreesToRadians);
     }
 
     public Actor spawnFlareInForeground(Actor3D emitter, float size) {
@@ -621,12 +597,12 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
         return originX;
     }
 
-    public float getOriginY() {
-        return originY;
-    }
-
     public void setOriginX(float originX) {
         this.originX = originX;
+    }
+
+    public float getOriginY() {
+        return originY;
     }
 
     public void setOriginY(float originY) {
@@ -668,6 +644,18 @@ public class Actor3D extends ModelInstance implements Disposable, Cullable {
             localCoords.y = (tox * -sin + toy * cos) - originY + y;
         }
         return localCoords;
+    }
+
+    public enum Tag {
+        FRONT, BACK, CENTER,
+
+        /**
+         * Draw something in front if the second wave-drawer (cliffs)
+         */
+        MEGAFRONT,
+
+        // and even more in the front (like clouds in front of cliff)
+        GIGAFRONT
     }
 
 

@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.badlogic.gdx.math.Vector2;
@@ -15,31 +13,6 @@ public final class FxaaFilter extends Filter<FxaaFilter> {
     private float FXAA_REDUCE_MIN;
     private float FXAA_REDUCE_MUL;
     private float FXAA_SPAN_MAX;
-
-    public enum Param implements Parameter {
-        // @formatter:off
-		Texture("u_texture0", 0), ViewportInverse("u_viewportInverse", 2), FxaaReduceMin("FXAA_REDUCE_MIN", 0), FxaaReduceMul(
-			"FXAA_REDUCE_MUL", 0), FxaaSpanMax("FXAA_SPAN_MAX", 0), ;
-		// @formatter:on
-
-        private final String mnemonic;
-        private final int elementSize;
-
-        Param(String mnemonic, int arrayElementSize) {
-            this.mnemonic = mnemonic;
-            this.elementSize = arrayElementSize;
-        }
-
-        @Override
-        public String mnemonic() {
-            return this.mnemonic;
-        }
-
-        @Override
-        public int arrayElementSize() {
-            return this.elementSize;
-        }
-    }
 
     public FxaaFilter(int viewportWidth, int viewportHeight) {
         this(new Vector2(viewportWidth, viewportHeight), 1f / 128f, 1f / 8f, 8f);
@@ -114,5 +87,30 @@ public final class FxaaFilter extends Filter<FxaaFilter> {
     @Override
     protected void onBeforeRender() {
         inputTexture.bind(u_texture0);
+    }
+
+    public enum Param implements Parameter {
+        // @formatter:off
+		Texture("u_texture0", 0), ViewportInverse("u_viewportInverse", 2), FxaaReduceMin("FXAA_REDUCE_MIN", 0), FxaaReduceMul(
+			"FXAA_REDUCE_MUL", 0), FxaaSpanMax("FXAA_SPAN_MAX", 0), ;
+		// @formatter:on
+
+        private final String mnemonic;
+        private final int elementSize;
+
+        Param(String mnemonic, int arrayElementSize) {
+            this.mnemonic = mnemonic;
+            this.elementSize = arrayElementSize;
+        }
+
+        @Override
+        public String mnemonic() {
+            return this.mnemonic;
+        }
+
+        @Override
+        public int arrayElementSize() {
+            return this.elementSize;
+        }
     }
 }

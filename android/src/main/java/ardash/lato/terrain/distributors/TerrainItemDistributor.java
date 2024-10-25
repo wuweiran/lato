@@ -1,4 +1,3 @@
-
 package ardash.lato.terrain.distributors;
 
 import java.util.SortedMap;
@@ -10,13 +9,13 @@ public abstract class TerrainItemDistributor {
 
     static final int AVG_RANGE_SIZE = 500;
 
-    protected abstract void addItem(int i);
-
-    protected abstract int addAFewItems(int from, int to);
-
     public TerrainItemDistributor() {
         super();
     }
+
+    protected abstract void addItem(int i);
+
+    protected abstract int addAFewItems(int from, int to);
 
     public void reset() {
 //		for (TerrainItem ti : getRangeMap().values()) {

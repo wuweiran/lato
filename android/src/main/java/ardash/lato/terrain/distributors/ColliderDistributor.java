@@ -1,4 +1,3 @@
-
 package ardash.lato.terrain.distributors;
 
 import java.util.TreeMap;

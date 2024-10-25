@@ -16,11 +16,11 @@ public interface TerrainItem extends Cullable {
 
     Tag getTag();
 
+    void setTag(Tag tag);
+
     float getX();
 
     float getZ();
-
-    void setTag(Tag tag);
 
     boolean remove();
 

@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -9,32 +7,6 @@ import com.bitfire.utils.ShaderLoader;
 public final class Combine extends Filter<Combine> {
 
     private float s1i, s1s, s2i, s2s;
-
-    public enum Param implements Parameter {
-        // @formatter:off
-		Texture0("u_texture0", 0), Texture1("u_texture1", 0), Source1Intensity("Src1Intensity", 0), Source1Saturation(
-			"Src1Saturation", 0), Source2Intensity("Src2Intensity", 0), Source2Saturation("Src2Saturation", 0);
-		// @formatter:on
-
-        private final String mnemonic;
-        private final int elementSize;
-
-        Param(String m, int elementSize) {
-            this.mnemonic = m;
-            this.elementSize = elementSize;
-        }
-
-        @Override
-        public String mnemonic() {
-            return this.mnemonic;
-        }
-
-        @Override
-        public int arrayElementSize() {
-            return this.elementSize;
-        }
-    }
-
     private Texture inputTexture2 = null;
 
     public Combine() {
@@ -59,9 +31,17 @@ public final class Combine extends Filter<Combine> {
         return this;
     }
 
+    public float getSource1Intensity() {
+        return s1i;
+    }
+
     public void setSource1Intensity(float intensity) {
         s1i = intensity;
         setParam(Param.Source1Intensity, intensity);
+    }
+
+    public float getSource2Intensity() {
+        return s2i;
     }
 
     public void setSource2Intensity(float intensity) {
@@ -69,30 +49,22 @@ public final class Combine extends Filter<Combine> {
         setParam(Param.Source2Intensity, intensity);
     }
 
+    public float getSource1Saturation() {
+        return s1s;
+    }
+
     public void setSource1Saturation(float saturation) {
         s1s = saturation;
         setParam(Param.Source1Saturation, saturation);
     }
 
+    public float getSource2Saturation() {
+        return s2s;
+    }
+
     public void setSource2Saturation(float saturation) {
         s2s = saturation;
         setParam(Param.Source2Saturation, saturation);
-    }
-
-    public float getSource1Intensity() {
-        return s1i;
-    }
-
-    public float getSource2Intensity() {
-        return s2i;
-    }
-
-    public float getSource1Saturation() {
-        return s1s;
-    }
-
-    public float getSource2Saturation() {
-        return s2s;
     }
 
     @Override
@@ -110,5 +82,30 @@ public final class Combine extends Filter<Combine> {
     protected void onBeforeRender() {
         inputTexture.bind(u_texture0);
         inputTexture2.bind(u_texture1);
+    }
+
+    public enum Param implements Parameter {
+        // @formatter:off
+		Texture0("u_texture0", 0), Texture1("u_texture1", 0), Source1Intensity("Src1Intensity", 0), Source1Saturation(
+			"Src1Saturation", 0), Source2Intensity("Src2Intensity", 0), Source2Saturation("Src2Saturation", 0);
+		// @formatter:on
+
+        private final String mnemonic;
+        private final int elementSize;
+
+        Param(String m, int elementSize) {
+            this.mnemonic = m;
+            this.elementSize = elementSize;
+        }
+
+        @Override
+        public String mnemonic() {
+            return this.mnemonic;
+        }
+
+        @Override
+        public int arrayElementSize() {
+            return this.elementSize;
+        }
     }
 }

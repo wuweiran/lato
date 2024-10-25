@@ -1,4 +1,3 @@
-
 package ardash.gdx.scenes.scene3d.actions;
 
 import com.badlogic.gdx.graphics.Color;

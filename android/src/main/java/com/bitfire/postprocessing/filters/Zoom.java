@@ -1,35 +1,9 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.bitfire.utils.ShaderLoader;
 
 public final class Zoom extends Filter<Zoom> {
     private float x, y, zoom;
-
-    public enum Param implements Parameter {
-        // @formatter:off
-		Texture("u_texture0", 0), OffsetX("offset_x", 0), OffsetY("offset_y", 0), Zoom("zoom", 0), ;
-		// @formatter:on
-
-        private final String mnemonic;
-        private final int elementSize;
-
-        Param(String mnemonic, int arrayElementSize) {
-            this.mnemonic = mnemonic;
-            this.elementSize = arrayElementSize;
-        }
-
-        @Override
-        public String mnemonic() {
-            return this.mnemonic;
-        }
-
-        @Override
-        public int arrayElementSize() {
-            return this.elementSize;
-        }
-    }
 
     public Zoom() {
         super(ShaderLoader.fromFile("zoom", "zoom"));
@@ -49,13 +23,13 @@ public final class Zoom extends Filter<Zoom> {
         endParams();
     }
 
+    public float getZoom() {
+        return zoom;
+    }
+
     public void setZoom(float zoom) {
         this.zoom = zoom;
         setParam(Param.Zoom, this.zoom);
-    }
-
-    public float getZoom() {
-        return zoom;
     }
 
     public float getOriginX() {
@@ -79,5 +53,29 @@ public final class Zoom extends Filter<Zoom> {
     @Override
     protected void onBeforeRender() {
         inputTexture.bind(u_texture0);
+    }
+
+    public enum Param implements Parameter {
+        // @formatter:off
+		Texture("u_texture0", 0), OffsetX("offset_x", 0), OffsetY("offset_y", 0), Zoom("zoom", 0), ;
+		// @formatter:on
+
+        private final String mnemonic;
+        private final int elementSize;
+
+        Param(String mnemonic, int arrayElementSize) {
+            this.mnemonic = mnemonic;
+            this.elementSize = arrayElementSize;
+        }
+
+        @Override
+        public String mnemonic() {
+            return this.mnemonic;
+        }
+
+        @Override
+        public int arrayElementSize() {
+            return this.elementSize;
+        }
     }
 }

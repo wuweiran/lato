@@ -106,17 +106,6 @@ public class Image3D extends Actor3D {
         this.height = height;
     }
 
-
-    @Override
-    public float getWidth() {
-        return width;
-    }
-
-    @Override
-    public float getHeight() {
-        return height;
-    }
-
     /**
      * x -> w
      * y -> h
@@ -150,6 +139,16 @@ public class Image3D extends Actor3D {
 
         return modelBuilder.createRect(0, 0, 0, width, 0 + shear, 0, width, height + shear, 0, 0, height, 0, 0, 0, 1, material, usageCode);
 
+    }
+
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
     }
 
 }

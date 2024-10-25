@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.bitfire.postprocessing.utils.PingPongBuffer;

@@ -1,5 +1,8 @@
-
 package ardash.lato.terrain;
+
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,13 +10,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
 
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pools;
-
 import ardash.lato.actors3.Coin;
 import ardash.lato.actors3.Stone;
-import ardash.lato.actors3.TerrainItem;
 import ardash.lato.terrain.distributors.CoinDistributor;
 import ardash.lato.terrain.distributors.StoneDistributor;
 import ardash.lato.terrain.distributors.TerrainItemDistributor;
@@ -26,18 +24,12 @@ import ardash.lato.terrain.distributors.TerrainItemDistributor;
  */
 public class TerrainManager {
 
-    public interface TerrainListener {
-        void onNewSectionCreated(Section s);
-    }
-
     /**
      * List of all sections of the current terrain. Will be truncated, when a new round starts.
      * Appends new items but does not delete first items in the beginning, so we an look back of what we have passed in the current round.
      */
     List<Section> sections = new ArrayList<>();
-
     List<TerrainListener> listeners = new ArrayList<>();
-
     private TerrainItemDistributor cd = new CoinDistributor();
     private TerrainItemDistributor sd = new StoneDistributor();
 
@@ -183,6 +175,10 @@ public class TerrainManager {
 
     public List<Section> getSections() {
         return sections;
+    }
+
+    public interface TerrainListener {
+        void onNewSectionCreated(Section s);
     }
 
 }

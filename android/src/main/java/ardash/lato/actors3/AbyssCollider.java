@@ -29,16 +29,6 @@ public class AbyssCollider extends Image3D implements TerrainItem, Poolable {
         setVisible(false);
     }
 
-    @Override
-    public void draw(ModelBatch modelBatch, Environment environment) {
-//		nothing
-    }
-
-    @Override
-    public void reset() {
-        hasCollided = false;
-    }
-
     /**
      * -1 for random
      */
@@ -48,6 +38,16 @@ public class AbyssCollider extends Image3D implements TerrainItem, Poolable {
 
     private static ModelBuilder getModelBuilder() {
         return new ModelBuilder(); // TODO Pool or reuse a static instance
+    }
+
+    @Override
+    public void draw(ModelBatch modelBatch, Environment environment) {
+//		nothing
+    }
+
+    @Override
+    public void reset() {
+        hasCollided = false;
     }
 
     @Override

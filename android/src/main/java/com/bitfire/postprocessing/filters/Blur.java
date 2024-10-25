@@ -1,46 +1,18 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.badlogic.gdx.utils.IntMap;
 import com.bitfire.postprocessing.utils.PingPongBuffer;
 
 public final class Blur extends MultiPassFilter {
-    // @formatter:off
-	private enum Tap {
-		Tap3x3(1), Tap5x5(2),
-		// Tap7x7( 3 )
-		;
-
-		public final int radius;
-
-		Tap (int radius) {
-			this.radius = radius;
-		}
-	}
-
-	public enum BlurType {
-		Gaussian3x3(Tap.Tap3x3), Gaussian3x3b(Tap.Tap3x3), // R=5 (11x11, policy "higher-then-discard")
-		Gaussian5x5(Tap.Tap5x5), Gaussian5x5b(Tap.Tap5x5), // R=9 (19x19, policy "higher-then-discard")
-		;
-
-		public final Tap tap;
-
-		BlurType (Tap tap) {
-			this.tap = tap;
-		}
-	}
-
-	// @formatter:on
-
+    private final IntMap<Convolve2D> convolve = new IntMap<Convolve2D>(Tap.values().length);
     // blur
     private BlurType type;
+
+	// @formatter:on
     private float amount;
     private int passes;
-
     // fbo, textures
     private float invWidth, invHeight;
-    private final IntMap<Convolve2D> convolve = new IntMap<Convolve2D>(Tap.values().length);
 
     public Blur(int width, int height) {
         // precompute constants
@@ -64,8 +36,16 @@ public final class Blur extends MultiPassFilter {
         }
     }
 
+    public int getPasses() {
+        return passes;
+    }
+
     public void setPasses(int passes) {
         this.passes = passes;
+    }
+
+    public BlurType getType() {
+        return type;
     }
 
     public void setType(BlurType type) {
@@ -76,22 +56,14 @@ public final class Blur extends MultiPassFilter {
     }
 
     // not all blur types support custom amounts at this time
-    public void setAmount(float amount) {
-        this.amount = amount;
-        computeBlurWeightings();
-    }
-
-    public int getPasses() {
-        return passes;
-    }
-
-    public BlurType getType() {
-        return type;
+    public float getAmount() {
+        return amount;
     }
 
     // not all blur types support custom amounts at this time
-    public float getAmount() {
-        return amount;
+    public void setAmount(float amount) {
+        this.amount = amount;
+        computeBlurWeightings();
     }
 
     @Override
@@ -253,4 +225,29 @@ public final class Blur extends MultiPassFilter {
     public void rebind() {
         computeBlurWeightings();
     }
+
+    // @formatter:off
+	private enum Tap {
+		Tap3x3(1), Tap5x5(2),
+		// Tap7x7( 3 )
+		;
+
+		public final int radius;
+
+		Tap (int radius) {
+			this.radius = radius;
+		}
+	}
+
+	public enum BlurType {
+		Gaussian3x3(Tap.Tap3x3), Gaussian3x3b(Tap.Tap3x3), // R=5 (11x11, policy "higher-then-discard")
+		Gaussian5x5(Tap.Tap5x5), Gaussian5x5b(Tap.Tap5x5), // R=9 (19x19, policy "higher-then-discard")
+		;
+
+		public final Tap tap;
+
+		BlurType (Tap tap) {
+			this.tap = tap;
+		}
+	}
 }

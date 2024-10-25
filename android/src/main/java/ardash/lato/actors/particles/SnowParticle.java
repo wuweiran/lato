@@ -1,4 +1,3 @@
-
 package ardash.lato.actors.particles;
 
 import com.badlogic.gdx.graphics.Color;

@@ -1,13 +1,13 @@
 package ardash.lato;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.g3d.utils.ShaderProvider;
 import com.badlogic.gdx.utils.PerformanceCounter;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import ardash.gdx.scenes.scene3d.Actor3D;
 import ardash.gdx.scenes.scene3d.Stage3D;
@@ -18,10 +18,10 @@ import ardash.lato.terrain.TerrainManager.TerrainListener;
 
 public class LatoStage3D extends Stage3D implements TerrainListener {
 
+    public static final float DRAW_STEPS = WaveDrawer.DRAW_STEPS;
     private static int sc = 0;
     protected PerformanceCounter pcact = Actor3D.getGameManager().performanceCounters.add("s3d act " + sc);
     protected PerformanceCounter pcdra = Actor3D.getGameManager().performanceCounters.add("s3d dra " + sc++);
-    public static final float DRAW_STEPS = WaveDrawer.DRAW_STEPS;
 
 
     public LatoStage3D(Viewport v) {

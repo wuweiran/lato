@@ -1,10 +1,36 @@
-
-
 package com.bitfire.postprocessing.filters;
 
 import com.bitfire.utils.ShaderLoader;
 
 public final class Threshold extends Filter<Threshold> {
+
+    private float gamma = 0;
+
+    public Threshold() {
+        super(ShaderLoader.fromFile("screenspace", "threshold"));
+        rebind();
+    }
+
+    public float getThreshold() {
+        return gamma;
+    }
+
+    public void setThreshold(float gamma) {
+        this.gamma = gamma;
+        setParams(Param.Threshold, gamma);
+        setParams(Param.ThresholdInvTx, 1f / (1 - gamma)).endParams();
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        inputTexture.bind(u_texture0);
+    }
+
+    @Override
+    public void rebind() {
+        setParams(Param.Texture, u_texture0);
+        setThreshold(this.gamma);
+    }
 
     public enum Param implements Parameter {
         // @formatter:off
@@ -28,33 +54,5 @@ public final class Threshold extends Filter<Threshold> {
         public int arrayElementSize() {
             return this.elementSize;
         }
-    }
-
-    public Threshold() {
-        super(ShaderLoader.fromFile("screenspace", "threshold"));
-        rebind();
-    }
-
-    private float gamma = 0;
-
-    public void setThreshold(float gamma) {
-        this.gamma = gamma;
-        setParams(Param.Threshold, gamma);
-        setParams(Param.ThresholdInvTx, 1f / (1 - gamma)).endParams();
-    }
-
-    public float getThreshold() {
-        return gamma;
-    }
-
-    @Override
-    protected void onBeforeRender() {
-        inputTexture.bind(u_texture0);
-    }
-
-    @Override
-    public void rebind() {
-        setParams(Param.Texture, u_texture0);
-        setThreshold(this.gamma);
     }
 }

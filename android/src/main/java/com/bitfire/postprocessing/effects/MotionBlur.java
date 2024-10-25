@@ -1,4 +1,3 @@
-
 package com.bitfire.postprocessing.effects;
 
 import com.badlogic.gdx.graphics.Pixmap.Format;

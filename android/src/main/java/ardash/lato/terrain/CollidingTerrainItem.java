@@ -1,4 +1,3 @@
-
 package ardash.lato.terrain;
 
 import ardash.lato.actors3.TerrainItem;

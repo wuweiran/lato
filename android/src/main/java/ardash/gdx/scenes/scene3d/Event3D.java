@@ -126,10 +126,6 @@ public class Event3D implements Poolable {
         return cancelled;
     }
 
-    public void setCapture(boolean capture) {
-        this.capture = capture;
-    }
-
     /**
      * If true, the event was fired during the capture phase.
      *
@@ -139,8 +135,8 @@ public class Event3D implements Poolable {
         return capture;
     }
 
-    public void setStage(Stage3D stage) {
-        this.stage = stage;
+    public void setCapture(boolean capture) {
+        this.capture = capture;
     }
 
     /**
@@ -148,5 +144,9 @@ public class Event3D implements Poolable {
      */
     public Stage3D getStage() {
         return stage;
+    }
+
+    public void setStage(Stage3D stage) {
+        this.stage = stage;
     }
 }

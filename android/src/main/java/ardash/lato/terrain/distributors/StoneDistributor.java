@@ -1,11 +1,9 @@
-
 package ardash.lato.terrain.distributors;
-
-import java.util.SortedMap;
 
 import com.badlogic.gdx.math.MathUtils;
 
-import ardash.lato.terrain.CollidingTerrainItem;
+import java.util.SortedMap;
+
 import ardash.lato.terrain.TerrainItemType;
 
 public class StoneDistributor extends ColliderDistributor {

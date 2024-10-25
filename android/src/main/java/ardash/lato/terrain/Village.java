@@ -1,12 +1,12 @@
 package ardash.lato.terrain;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pools;
+
+import java.util.Arrays;
+import java.util.List;
 
 import ardash.gdx.scenes.scene3d.Actor3D.Tag;
 import ardash.lato.actors3.Farmhouse;

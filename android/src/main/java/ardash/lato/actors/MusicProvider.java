@@ -1,4 +1,3 @@
-
 package ardash.lato.actors;
 
 import com.badlogic.gdx.audio.Music;

@@ -17,8 +17,8 @@ import ardash.lato.terrain.CollidingTerrainItem;
 
 public class Coin extends PoolableActor3D implements CollidingTerrainItem {
     private static final Color emissiveLightColor = Color.GOLD.cpy().lerp(Color.BLACK, 0.15f);
-    private boolean hasCollided;
     private final Rectangle bb;
+    private boolean hasCollided;
 
     public Coin() {
         super(getModel());
@@ -35,6 +35,10 @@ public class Coin extends PoolableActor3D implements CollidingTerrainItem {
         this.bb = new Rectangle(getX(), getY(), 0.1f, 0.1f);
     }
 
+    private static Model getModel() {
+        return A.getModel(ModelAsset.YCOIN);
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -45,10 +49,6 @@ public class Coin extends PoolableActor3D implements CollidingTerrainItem {
     @Override
     public void draw(ModelBatch modelBatch, Environment environment) {
         super.draw(modelBatch, getStage().dirLightenvironment);
-    }
-
-    private static Model getModel() {
-        return A.getModel(ModelAsset.YCOIN);
     }
 
     @Override

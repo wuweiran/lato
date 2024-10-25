@@ -1,5 +1,3 @@
-
-
 package ardash.gdx.scenes.scene3d;
 
 import com.badlogic.gdx.graphics.g3d.Environment;
@@ -12,8 +10,8 @@ import com.badlogic.gdx.utils.SnapshotArray;
 
 
 public class Group3D extends Actor3D {
-    private final SnapshotArray<Actor3D> children = new SnapshotArray<>(true, 4, Actor3D.class);
     public static int draw1Count, draw2Count;
+    private final SnapshotArray<Actor3D> children = new SnapshotArray<>(true, 4, Actor3D.class);
 
     public Group3D() {
         super();

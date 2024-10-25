@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing.utils;
 
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -23,18 +21,16 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
  * @author bmanuel
  */
 public final class PingPongBuffer {
+    public final boolean ownResources;
+    // save/restore state
+    private final FrameBuffer owned1, owned2;
     public FrameBuffer buffer1, buffer2;
     public Texture texture1, texture2;
     public int width, height;
-    public final boolean ownResources;
-
     // internal state
     private Texture texResult, texSrc;
     private FrameBuffer bufResult, bufSrc;
     private boolean writeState, pending1, pending2;
-
-    // save/restore state
-    private final FrameBuffer owned1, owned2;
     private FrameBuffer ownedResult, ownedSource;
     private int ownedW, ownedH;
 

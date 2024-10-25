@@ -1,4 +1,3 @@
-
 package ardash.gdx.graphics.g3d;
 
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
@@ -10,16 +9,9 @@ import ardash.lato.actors.particles.SnowParticle;
 
 public class ParticleEmitter extends Actor3D {
 
-    public enum ParticleEmitterType {
-        SNOW, COINSPLASH
-    }
-
-    ;
-
     private ModelBuilder mb;
     private ParticleEmitterType type;
     private boolean isStarted;
-
     public ParticleEmitter(ParticleEmitterType type) {
         super();
         this.type = type;
@@ -52,13 +44,16 @@ public class ParticleEmitter extends Actor3D {
         }
     }
 
-
     public void startEmitting() {
         isStarted = true;
     }
 
     public void stopEmitting() {
         isStarted = false;
+    }
+
+    public enum ParticleEmitterType {
+        SNOW, COINSPLASH
     }
 
 }

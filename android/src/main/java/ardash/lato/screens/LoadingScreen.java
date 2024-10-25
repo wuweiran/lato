@@ -15,9 +15,9 @@ import ardash.lato.weather.EnvColors;
 
 public class LoadingScreen implements Screen {
     GameManager gm;
+    Label title;
     private Stage stage;
     private LatoGame game;
-    Label title;
 
     public LoadingScreen(GameManager gm) {
         this.gm = gm;

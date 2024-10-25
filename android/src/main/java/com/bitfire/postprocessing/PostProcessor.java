@@ -1,5 +1,3 @@
-
-
 package com.bitfire.postprocessing;
 
 import com.badlogic.gdx.Gdx;
@@ -23,24 +21,22 @@ import com.bitfire.utils.ItemsManager;
  * @author bmanuel
  */
 public final class PostProcessor implements Disposable {
+    private static final Array<PingPongBuffer> buffers = new Array<PingPongBuffer>(5);
     /**
      * Enable pipeline state queries: beware the pipeline can stall!
      */
     public static boolean EnableQueryStates = false;
-
     private static PipelineState pipelineState = null;
     private static Format fbFormat;
-    private final PingPongBuffer composite;
-    private TextureWrap compositeWrapU;
-    private TextureWrap compositeWrapV;
-    private final ItemsManager<PostProcessorEffect> effectsManager = new ItemsManager<PostProcessorEffect>();
-    private static final Array<PingPongBuffer> buffers = new Array<PingPongBuffer>(5);
-    private final Color clearColor = Color.CLEAR;
-    private int clearBits = GL20.GL_COLOR_BUFFER_BIT;
-    private float clearDepth = 1f;
     private static Rectangle viewport = new Rectangle();
     private static boolean hasViewport = false;
-
+    private final PingPongBuffer composite;
+    private final ItemsManager<PostProcessorEffect> effectsManager = new ItemsManager<PostProcessorEffect>();
+    private final Color clearColor = Color.CLEAR;
+    private TextureWrap compositeWrapU;
+    private TextureWrap compositeWrapV;
+    private int clearBits = GL20.GL_COLOR_BUFFER_BIT;
+    private float clearDepth = 1f;
     private boolean enabled = true;
     private boolean capturing = false;
     private boolean hasCaptured = false;
@@ -145,6 +141,23 @@ public final class PostProcessor implements Disposable {
     }
 
     /**
+     * Returns the internal framebuffer format, computed from the parameters specified during construction. NOTE: the returned
+     * Format will be valid after construction and NOT early!
+     */
+    public static Format getFramebufferFormat() {
+        return fbFormat;
+    }
+
+    /**
+     * Restores the previously set viewport if one was specified earlier and the destination buffer is the screen
+     */
+    protected static void restoreViewport(FrameBuffer dest) {
+        if (hasViewport && dest == null) {
+            Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+        }
+    }
+
+    /**
      * Sets the viewport to be restored, if null is specified then the viewport will NOT be restored at all.
      * <p>
      * The predefined effects will restore the viewport settings at the final blitting stage (render to screen) by invoking the
@@ -186,6 +199,13 @@ public final class PostProcessor implements Disposable {
     }
 
     /**
+     * Sets whether or not the post-processor should be enabled
+     */
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
      * If called before capturing it will indicate if the next capture call will succeeds or not.
      */
     public boolean isReady() {
@@ -199,13 +219,6 @@ public final class PostProcessor implements Disposable {
         }
 
         return (enabled && !capturing && hasEffects);
-    }
-
-    /**
-     * Sets whether or not the post-processor should be enabled
-     */
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     /**
@@ -236,14 +249,6 @@ public final class PostProcessor implements Disposable {
      */
     public void removeEffect(PostProcessorEffect effect) {
         effectsManager.remove(effect);
-    }
-
-    /**
-     * Returns the internal framebuffer format, computed from the parameters specified during construction. NOTE: the returned
-     * Format will be valid after construction and NOT early!
-     */
-    public static Format getFramebufferFormat() {
-        return fbFormat;
     }
 
     /**
@@ -451,15 +456,6 @@ public final class PostProcessor implements Disposable {
         }
 
         return enabledEffects.size;
-    }
-
-    /**
-     * Restores the previously set viewport if one was specified earlier and the destination buffer is the screen
-     */
-    protected static void restoreViewport(FrameBuffer dest) {
-        if (hasViewport && dest == null) {
-            Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
-        }
     }
 
 }

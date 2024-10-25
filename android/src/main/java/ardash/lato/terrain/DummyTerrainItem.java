@@ -1,4 +1,3 @@
-
 package ardash.lato.terrain;
 
 import ardash.gdx.scenes.scene3d.Actor3D.Tag;
@@ -17,6 +16,11 @@ public class DummyTerrainItem implements CollidingTerrainItem {
     }
 
     @Override
+    public void setTag(Tag tag) {
+        // nothing
+    }
+
+    @Override
     public float getX() {
         return 0;
     }
@@ -24,11 +28,6 @@ public class DummyTerrainItem implements CollidingTerrainItem {
     @Override
     public float getZ() {
         return 0;
-    }
-
-    @Override
-    public void setTag(Tag tag) {
-        // nothing
     }
 
     @Override

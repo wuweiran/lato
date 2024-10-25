@@ -13,15 +13,15 @@ import ardash.gdx.scenes.scene3d.Actor3D;
 abstract public class DelegateAction extends Action3D {
     protected Action3D action;
 
+    public Action3D getAction() {
+        return action;
+    }
+
     /**
      * Sets the wrapped action.
      */
     public void setAction(Action3D action) {
         this.action = action;
-    }
-
-    public Action3D getAction() {
-        return action;
     }
 
     abstract protected boolean delegate(float delta);
