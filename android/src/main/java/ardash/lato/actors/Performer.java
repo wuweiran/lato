@@ -192,7 +192,7 @@ public class Performer extends Group3D implements Disposable, AmbientColorChange
 
 
             // accelerate on ground
-            final float angleToGround = 360f - velocity.angle(); // 0 or 360 is horizontal, 90 is downward, 45 is ramp down forward
+            final float angleToGround = 360f - velocity.angleDeg(); // 0 or 360 is horizontal, 90 is downward, 45 is ramp down forward
 //			System.out.println(angleToGround);
 
             if (!state.isCrashed()) {
