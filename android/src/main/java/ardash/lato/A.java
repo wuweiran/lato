@@ -325,8 +325,7 @@ public class A {
         return A.getTextureRegions(sgname).get(i);
     }
 
-    // TODO make private again?!
-    public static TextureAtlas getAtlas(AtlasAsset aa) {
+    private static TextureAtlas getAtlas(AtlasAsset aa) {
         final String path = aa.toString();
         if (!manager.isLoaded(path)) {
             manager.load(path, TextureAtlas.class);
@@ -409,8 +408,8 @@ public class A {
         HEADLINE_75, F1_30_BOLD, F1_15;
         // init
         static {
-            final float FONT_SIZE_LARGE = getActualPixelHeight(28); // TODO set to gui height
-            final float FONT_SIZE_SMALL = getActualPixelHeight(14); // TODO set to gui height
+            final float FONT_SIZE_LARGE = getActualPixelHeight(28);
+            final float FONT_SIZE_SMALL = getActualPixelHeight(14);
             {
                 FreeTypeFontGenerator generator;
                 FreeTypeFontParameter parameter;
